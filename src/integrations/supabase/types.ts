@@ -19,10 +19,13 @@ export type Database = {
           applied_at: string
           cover_letter: string | null
           id: string
+          interview_date: string | null
           match_reasons: string[] | null
           match_score: number | null
+          notes: string | null
           opportunity_id: string
           status: string
+          status_history: Json | null
           updated_at: string
           user_id: string
         }
@@ -30,10 +33,13 @@ export type Database = {
           applied_at?: string
           cover_letter?: string | null
           id?: string
+          interview_date?: string | null
           match_reasons?: string[] | null
           match_score?: number | null
+          notes?: string | null
           opportunity_id: string
           status?: string
+          status_history?: Json | null
           updated_at?: string
           user_id: string
         }
@@ -41,10 +47,13 @@ export type Database = {
           applied_at?: string
           cover_letter?: string | null
           id?: string
+          interview_date?: string | null
           match_reasons?: string[] | null
           match_score?: number | null
+          notes?: string | null
           opportunity_id?: string
           status?: string
+          status_history?: Json | null
           updated_at?: string
           user_id?: string
         }

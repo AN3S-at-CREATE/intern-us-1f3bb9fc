@@ -12,7 +12,8 @@ import {
   Menu,
   X,
   ChevronRight,
-  Sparkles
+  Sparkles,
+  ClipboardList
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -32,6 +33,7 @@ const studentNavItems: NavItem[] = [
   { icon: User, label: 'My Profile', href: '/dashboard/profile' },
   { icon: FileText, label: 'CV Builder', href: '/dashboard/cv-builder', badge: 'AI' },
   { icon: Briefcase, label: 'Opportunities', href: '/dashboard/opportunities' },
+  { icon: ClipboardList, label: 'Applications', href: '/dashboard/applications' },
   { icon: GraduationCap, label: 'Skills', href: '/dashboard/skills' },
   { icon: MessageSquare, label: 'Interview Prep', href: '/dashboard/interview', badge: 'AI' },
   { icon: Settings, label: 'Settings', href: '/dashboard/settings' },
