@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, Linkedin, Twitter, Instagram, Facebook } from "lucide-react";
 import logoDark from "@/assets/intern-us-logo-dark.svg";
 
 export function Footer() {
@@ -15,6 +15,40 @@ export function Footer() {
             <p className="text-muted-foreground text-sm leading-relaxed">
               South Africa's premier youth-to-industry platform. Connecting students with opportunities that launch careers.
             </p>
+            <div className="flex items-center gap-3 pt-2">
+              <a 
+                href="https://linkedin.com/company/internus" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="p-2 rounded-lg bg-card/50 border border-border/50 text-muted-foreground hover:text-primary hover:border-primary/50 hover:shadow-neon-sm transition-all duration-200"
+              >
+                <Linkedin className="h-4 w-4" />
+              </a>
+              <a 
+                href="https://twitter.com/internus_za" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="p-2 rounded-lg bg-card/50 border border-border/50 text-muted-foreground hover:text-primary hover:border-primary/50 hover:shadow-neon-sm transition-all duration-200"
+              >
+                <Twitter className="h-4 w-4" />
+              </a>
+              <a 
+                href="https://instagram.com/internus_za" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="p-2 rounded-lg bg-card/50 border border-border/50 text-muted-foreground hover:text-primary hover:border-primary/50 hover:shadow-neon-sm transition-all duration-200"
+              >
+                <Instagram className="h-4 w-4" />
+              </a>
+              <a 
+                href="https://facebook.com/internusza" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="p-2 rounded-lg bg-card/50 border border-border/50 text-muted-foreground hover:text-primary hover:border-primary/50 hover:shadow-neon-sm transition-all duration-200"
+              >
+                <Facebook className="h-4 w-4" />
+              </a>
+            </div>
           </div>
 
           {/* For Students */}
