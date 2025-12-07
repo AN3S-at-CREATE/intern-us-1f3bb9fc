@@ -18,6 +18,7 @@ import SignInPage from "./pages/auth/SignInPage";
 // Dashboard pages
 import Dashboard from "./pages/Dashboard";
 import ProfileBuilder from "./pages/dashboard/ProfileBuilder";
+import CVBuilder from "./pages/dashboard/CVBuilder";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +49,11 @@ const App = () => (
             <Route path="/dashboard/profile" element={
               <ProtectedRoute allowedRoles={['student']}>
                 <ProfileBuilder />
+              </ProtectedRoute>
+            } />
+            <Route path="/dashboard/cv-builder" element={
+              <ProtectedRoute allowedRoles={['student']}>
+                <CVBuilder />
               </ProtectedRoute>
             } />
             
