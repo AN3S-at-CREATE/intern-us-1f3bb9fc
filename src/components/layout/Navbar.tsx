@@ -3,7 +3,7 @@ import { NeonButton } from "@/components/ui/NeonButton";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import logo from "@/assets/intern-us-logo.svg";
+import logoDark from "@/assets/intern-us-logo-dark.svg";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,7 +14,7 @@ export function Navbar() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
-            <img src={logo} alt="Intern US" className="h-10 w-auto" />
+            <img src={logoDark} alt="Intern US" className="h-10 w-auto" />
           </Link>
 
           {/* Desktop Navigation */}
