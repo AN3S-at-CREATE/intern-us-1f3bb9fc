@@ -1,1 +1,7 @@
 project_id = "rasrdvtilcwzrvrjfhjs"
+
+[functions.ai-cv-enhance]
+verify_jwt = false
+
+[functions.ai-interview]
+verify_jwt = false
