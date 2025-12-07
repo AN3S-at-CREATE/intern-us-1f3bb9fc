@@ -19,6 +19,7 @@ import SignInPage from "./pages/auth/SignInPage";
 import Dashboard from "./pages/Dashboard";
 import ProfileBuilder from "./pages/dashboard/ProfileBuilder";
 import CVBuilder from "./pages/dashboard/CVBuilder";
+import InterviewSimulator from "./pages/dashboard/InterviewSimulator";
 
 const queryClient = new QueryClient();
 
@@ -54,6 +55,11 @@ const App = () => (
             <Route path="/dashboard/cv-builder" element={
               <ProtectedRoute allowedRoles={['student']}>
                 <CVBuilder />
+              </ProtectedRoute>
+            } />
+            <Route path="/dashboard/interview" element={
+              <ProtectedRoute allowedRoles={['student']}>
+                <InterviewSimulator />
               </ProtectedRoute>
             } />
             
