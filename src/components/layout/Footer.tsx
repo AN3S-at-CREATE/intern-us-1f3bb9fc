@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, Linkedin, Twitter, Instagram, Facebook } from "lucide-react";
 import logoDark from "@/assets/intern-us-logo-dark.svg";
+import { DataSaverToggle } from "@/components/ui/DataSaverToggle";
 
 export function Footer() {
   return (
@@ -122,9 +123,12 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-border/50 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-muted-foreground text-sm">
-            © {new Date().getFullYear()} Intern US. All rights reserved.
-          </p>
+          <div className="flex items-center gap-4">
+            <p className="text-muted-foreground text-sm">
+              © {new Date().getFullYear()} Intern US. All rights reserved.
+            </p>
+            <DataSaverToggle />
+          </div>
           <div className="flex items-center gap-6">
             <Link to="/privacy" className="text-muted-foreground hover:text-primary transition-colors text-sm">
               Privacy Policy
