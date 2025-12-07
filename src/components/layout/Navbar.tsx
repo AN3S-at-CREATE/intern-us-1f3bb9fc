@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import { NeonButton } from "@/components/ui/NeonButton";
-import { Menu, X, Zap } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import logo from "@/assets/intern-us-logo.svg";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,12 +14,7 @@ export function Navbar() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-neon-gradient shadow-neon">
-              <Zap className="h-5 w-5 text-primary-foreground" />
-            </div>
-            <span className="font-heading text-xl font-bold text-foreground group-hover:text-glow transition-all">
-              Intern<span className="text-primary">US</span>
-            </span>
+            <img src={logo} alt="Intern US" className="h-10 w-auto" />
           </Link>
 
           {/* Desktop Navigation */}
