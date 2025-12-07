@@ -14,7 +14,8 @@ import {
   ChevronRight,
   Sparkles,
   ClipboardList,
-  Users
+  Users,
+  Compass
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -37,6 +38,7 @@ const studentNavItems: NavItem[] = [
   { icon: ClipboardList, label: 'Applications', href: '/dashboard/applications' },
   { icon: GraduationCap, label: 'Skills', href: '/dashboard/skills' },
   { icon: Users, label: 'Community', href: '/dashboard/community' },
+  { icon: Compass, label: 'Career Advisor', href: '/dashboard/career-advisor', badge: 'AI' },
   { icon: MessageSquare, label: 'Interview Prep', href: '/dashboard/interview', badge: 'AI' },
   { icon: Settings, label: 'Settings', href: '/dashboard/settings' },
 ];
@@ -153,15 +155,17 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
           {/* AI Assistant Card */}
           <div className="p-4 border-t border-sidebar-border">
-            <div className="glass-card p-4 relative overflow-hidden">
-              <div className="absolute -top-10 -right-10 w-24 h-24 bg-secondary/20 rounded-full blur-2xl" />
-              <Sparkles className="h-6 w-6 text-secondary mb-2" />
-              <h4 className="font-ui font-semibold text-foreground text-sm">AI Career Advisor</h4>
-              <p className="text-xs text-muted-foreground mt-1">Get personalized career guidance</p>
-              <Button size="sm" className="mt-3 w-full btn-neon text-xs">
-                Start Chat
-              </Button>
-            </div>
+            <Link to="/dashboard/career-advisor" className="block">
+              <div className="glass-card p-4 relative overflow-hidden hover:border-primary/50 transition-colors cursor-pointer">
+                <div className="absolute -top-10 -right-10 w-24 h-24 bg-secondary/20 rounded-full blur-2xl" />
+                <Sparkles className="h-6 w-6 text-secondary mb-2" />
+                <h4 className="font-ui font-semibold text-foreground text-sm">AI Career Advisor</h4>
+                <p className="text-xs text-muted-foreground mt-1">Get personalized career guidance</p>
+                <Button size="sm" className="mt-3 w-full btn-neon text-xs">
+                  Get Started
+                </Button>
+              </div>
+            </Link>
           </div>
 
           {/* Sign Out */}
