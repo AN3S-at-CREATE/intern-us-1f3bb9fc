@@ -14,6 +14,50 @@ export type Database = {
   }
   public: {
     Tables: {
+      applications: {
+        Row: {
+          applied_at: string
+          cover_letter: string | null
+          id: string
+          match_reasons: string[] | null
+          match_score: number | null
+          opportunity_id: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          applied_at?: string
+          cover_letter?: string | null
+          id?: string
+          match_reasons?: string[] | null
+          match_score?: number | null
+          opportunity_id: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          applied_at?: string
+          cover_letter?: string | null
+          id?: string
+          match_reasons?: string[] | null
+          match_score?: number | null
+          opportunity_id?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "applications_opportunity_id_fkey"
+            columns: ["opportunity_id"]
+            isOneToOne: false
+            referencedRelation: "opportunities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       education: {
         Row: {
           created_at: string
@@ -59,6 +103,90 @@ export type Database = {
         }
         Relationships: []
       }
+      opportunities: {
+        Row: {
+          application_deadline: string | null
+          applications_count: number
+          company_logo_url: string | null
+          company_name: string
+          created_at: string
+          description: string
+          duration_months: number | null
+          employer_id: string
+          field_of_study: string[] | null
+          id: string
+          industry: string
+          is_active: boolean
+          is_featured: boolean
+          location: string
+          location_type: string
+          min_qualification: string | null
+          opportunity_type: string
+          requirements: string | null
+          responsibilities: string | null
+          start_date: string | null
+          stipend_max: number | null
+          stipend_min: number | null
+          title: string
+          updated_at: string
+          views_count: number
+        }
+        Insert: {
+          application_deadline?: string | null
+          applications_count?: number
+          company_logo_url?: string | null
+          company_name: string
+          created_at?: string
+          description: string
+          duration_months?: number | null
+          employer_id: string
+          field_of_study?: string[] | null
+          id?: string
+          industry: string
+          is_active?: boolean
+          is_featured?: boolean
+          location: string
+          location_type?: string
+          min_qualification?: string | null
+          opportunity_type?: string
+          requirements?: string | null
+          responsibilities?: string | null
+          start_date?: string | null
+          stipend_max?: number | null
+          stipend_min?: number | null
+          title: string
+          updated_at?: string
+          views_count?: number
+        }
+        Update: {
+          application_deadline?: string | null
+          applications_count?: number
+          company_logo_url?: string | null
+          company_name?: string
+          created_at?: string
+          description?: string
+          duration_months?: number | null
+          employer_id?: string
+          field_of_study?: string[] | null
+          id?: string
+          industry?: string
+          is_active?: boolean
+          is_featured?: boolean
+          location?: string
+          location_type?: string
+          min_qualification?: string | null
+          opportunity_type?: string
+          requirements?: string | null
+          responsibilities?: string | null
+          start_date?: string | null
+          stipend_max?: number | null
+          stipend_min?: number | null
+          title?: string
+          updated_at?: string
+          views_count?: number
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -97,6 +225,35 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      saved_opportunities: {
+        Row: {
+          id: string
+          opportunity_id: string
+          saved_at: string
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          opportunity_id: string
+          saved_at?: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          opportunity_id?: string
+          saved_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "saved_opportunities_opportunity_id_fkey"
+            columns: ["opportunity_id"]
+            isOneToOne: false
+            referencedRelation: "opportunities"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       skills: {
         Row: {

@@ -20,6 +20,7 @@ import Dashboard from "./pages/Dashboard";
 import ProfileBuilder from "./pages/dashboard/ProfileBuilder";
 import CVBuilder from "./pages/dashboard/CVBuilder";
 import InterviewSimulator from "./pages/dashboard/InterviewSimulator";
+import Opportunities from "./pages/dashboard/Opportunities";
 
 const queryClient = new QueryClient();
 
@@ -60,6 +61,11 @@ const App = () => (
             <Route path="/dashboard/interview" element={
               <ProtectedRoute allowedRoles={['student']}>
                 <InterviewSimulator />
+              </ProtectedRoute>
+            } />
+            <Route path="/dashboard/opportunities" element={
+              <ProtectedRoute allowedRoles={['student']}>
+                <Opportunities />
               </ProtectedRoute>
             } />
             
