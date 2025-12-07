@@ -8,3 +8,6 @@ verify_jwt = false
 
 [functions.ai-match-score]
 verify_jwt = false
+
+[functions.ai-skill-gap]
+verify_jwt = false
