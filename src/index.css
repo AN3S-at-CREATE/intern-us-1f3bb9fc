@@ -403,3 +403,42 @@
 ::-webkit-scrollbar-thumb:hover {
   background: hsla(var(--neon-cyan), 0.5);
 }
+
+/* Data Saver Mode - reduces animations and effects for low bandwidth */
+.data-saver *,
+.data-saver *::before,
+.data-saver *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+.data-saver .crystal-pattern,
+.data-saver .circuit-pattern {
+  background-image: none !important;
+}
+
+.data-saver .gradient-animated {
+  animation: none !important;
+  background-size: 100% 100% !important;
+}
+
+.data-saver .glass-card::before {
+  display: none !important;
+}
+
+.data-saver .text-glow,
+.data-saver .text-glow-magenta {
+  text-shadow: none !important;
+}
+
+.data-saver .btn-neon,
+.data-saver .btn-neon:hover {
+  box-shadow: none !important;
+}
+
+.data-saver .glow-pulse,
+.data-saver .neon-flicker,
+.data-saver .animate-float {
+  animation: none !important;
+}

@@ -6,6 +6,8 @@ import { FeaturesSection } from "@/components/landing/FeaturesSection";
 import { StatsSection } from "@/components/landing/StatsSection";
 import { PartnersSection } from "@/components/landing/PartnersSection";
 import { CTASection } from "@/components/landing/CTASection";
+import { FeaturedInternshipsCarousel } from "@/components/landing/FeaturedInternshipsCarousel";
+import { HowItWorksSection } from "@/components/landing/HowItWorksSection";
 
 const Landing = () => {
   return (
@@ -13,7 +15,9 @@ const Landing = () => {
       <Navbar />
       <main>
         <HeroSection />
+        <FeaturedInternshipsCarousel />
         <RolesSection />
+        <HowItWorksSection />
         <FeaturesSection />
         <StatsSection />
         <PartnersSection />
