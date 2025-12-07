@@ -112,6 +112,130 @@ export type Database = {
         }
         Relationships: []
       }
+      endorsements: {
+        Row: {
+          created_at: string
+          from_user_id: string
+          id: string
+          is_verified: boolean
+          message: string | null
+          skill_id: string | null
+          skill_name: string
+          to_user_id: string
+        }
+        Insert: {
+          created_at?: string
+          from_user_id: string
+          id?: string
+          is_verified?: boolean
+          message?: string | null
+          skill_id?: string | null
+          skill_name: string
+          to_user_id: string
+        }
+        Update: {
+          created_at?: string
+          from_user_id?: string
+          id?: string
+          is_verified?: boolean
+          message?: string | null
+          skill_id?: string | null
+          skill_name?: string
+          to_user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "endorsements_skill_id_fkey"
+            columns: ["skill_id"]
+            isOneToOne: false
+            referencedRelation: "skills"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mentor_connections: {
+        Row: {
+          connected_at: string | null
+          created_at: string
+          id: string
+          mentee_user_id: string
+          mentor_id: string
+          message: string | null
+          status: string
+        }
+        Insert: {
+          connected_at?: string | null
+          created_at?: string
+          id?: string
+          mentee_user_id: string
+          mentor_id: string
+          message?: string | null
+          status?: string
+        }
+        Update: {
+          connected_at?: string | null
+          created_at?: string
+          id?: string
+          mentee_user_id?: string
+          mentor_id?: string
+          message?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mentor_connections_mentor_id_fkey"
+            columns: ["mentor_id"]
+            isOneToOne: false
+            referencedRelation: "mentors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mentors: {
+        Row: {
+          availability: string
+          bio: string | null
+          company: string | null
+          created_at: string
+          id: string
+          industry: string
+          is_active: boolean
+          max_mentees: number
+          title: string
+          updated_at: string
+          user_id: string
+          years_experience: number
+        }
+        Insert: {
+          availability?: string
+          bio?: string | null
+          company?: string | null
+          created_at?: string
+          id?: string
+          industry: string
+          is_active?: boolean
+          max_mentees?: number
+          title: string
+          updated_at?: string
+          user_id: string
+          years_experience?: number
+        }
+        Update: {
+          availability?: string
+          bio?: string | null
+          company?: string | null
+          created_at?: string
+          id?: string
+          industry?: string
+          is_active?: boolean
+          max_mentees?: number
+          title?: string
+          updated_at?: string
+          user_id?: string
+          years_experience?: number
+        }
+        Relationships: []
+      }
       module_completions: {
         Row: {
           completed_at: string | null
@@ -377,6 +501,74 @@ export type Database = {
         }
         Relationships: []
       }
+      squad_members: {
+        Row: {
+          id: string
+          joined_at: string
+          role: string
+          squad_id: string
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          joined_at?: string
+          role?: string
+          squad_id: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          joined_at?: string
+          role?: string
+          squad_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "squad_members_squad_id_fkey"
+            columns: ["squad_id"]
+            isOneToOne: false
+            referencedRelation: "squads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      squads: {
+        Row: {
+          category: string
+          created_at: string
+          created_by: string
+          description: string | null
+          id: string
+          is_active: boolean
+          max_members: number
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          created_by: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          max_members?: number
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          created_by?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          max_members?: number
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       student_profiles: {
         Row: {
           bio: string | null
@@ -492,6 +684,39 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      trust_scores: {
+        Row: {
+          endorsements_given: number
+          endorsements_received: number
+          id: string
+          modules_completed: number
+          profile_verified: boolean
+          score: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          endorsements_given?: number
+          endorsements_received?: number
+          id?: string
+          modules_completed?: number
+          profile_verified?: boolean
+          score?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          endorsements_given?: number
+          endorsements_received?: number
+          id?: string
+          modules_completed?: number
+          profile_verified?: boolean
+          score?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       work_experience: {
         Row: {

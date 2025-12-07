@@ -13,7 +13,8 @@ import {
   X,
   ChevronRight,
   Sparkles,
-  ClipboardList
+  ClipboardList,
+  Users
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -35,6 +36,7 @@ const studentNavItems: NavItem[] = [
   { icon: Briefcase, label: 'Opportunities', href: '/dashboard/opportunities' },
   { icon: ClipboardList, label: 'Applications', href: '/dashboard/applications' },
   { icon: GraduationCap, label: 'Skills', href: '/dashboard/skills' },
+  { icon: Users, label: 'Community', href: '/dashboard/community' },
   { icon: MessageSquare, label: 'Interview Prep', href: '/dashboard/interview', badge: 'AI' },
   { icon: Settings, label: 'Settings', href: '/dashboard/settings' },
 ];

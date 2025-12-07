@@ -24,6 +24,7 @@ import InterviewSimulator from "./pages/dashboard/InterviewSimulator";
 import Opportunities from "./pages/dashboard/Opportunities";
 import SkillModules from "./pages/dashboard/SkillModules";
 import ApplicationTracker from "./pages/dashboard/ApplicationTracker";
+import CommunityHub from "./pages/dashboard/CommunityHub";
 
 const queryClient = new QueryClient();
 
@@ -80,6 +81,11 @@ const App = () => (
             <Route path="/dashboard/applications" element={
               <ProtectedRoute allowedRoles={['student']}>
                 <ApplicationTracker />
+              </ProtectedRoute>
+            } />
+            <Route path="/dashboard/community" element={
+              <ProtectedRoute allowedRoles={['student']}>
+                <CommunityHub />
               </ProtectedRoute>
             } />
             
