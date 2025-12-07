@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { Zap, Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
+import logoDark from "@/assets/intern-us-logo-dark.svg";
 
 export function Footer() {
   return (
@@ -9,12 +10,7 @@ export function Footer() {
           {/* Brand */}
           <div className="space-y-4">
             <Link to="/" className="flex items-center gap-2 group">
-              <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-neon-gradient shadow-neon">
-                <Zap className="h-5 w-5 text-primary-foreground" />
-              </div>
-              <span className="font-heading text-xl font-bold text-foreground">
-                Intern<span className="text-primary">US</span>
-              </span>
+              <img src={logoDark} alt="Intern US" className="h-10 w-auto" />
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed">
               South Africa's premier youth-to-industry platform. Connecting students with opportunities that launch careers.
