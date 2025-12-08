@@ -1,12 +1,30 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { NeonButton } from "@/components/ui/NeonButton";
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { cn } from "@/lib/utils";
 import logoDark from "@/assets/intern-us-logo-dark.svg";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleAnchorClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, hash: string) => {
+    e.preventDefault();
+    
+    // If we're not on the home page, navigate there first
+    if (location.pathname !== "/") {
+      navigate("/" + hash);
+    } else {
+      // Already on home page, just scroll
+      const element = document.getElementById(hash.replace("#", ""));
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+    setIsOpen(false);
+  }, [location.pathname, navigate]);
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
@@ -19,15 +37,27 @@ export function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            <Link to="/#features" className="neon-link text-muted-foreground hover:text-foreground transition-colors font-ui">
+            <a 
+              href="#features" 
+              onClick={(e) => handleAnchorClick(e, "#features")}
+              className="neon-link text-muted-foreground hover:text-foreground transition-colors font-ui cursor-pointer"
+            >
               Features
-            </Link>
-            <Link to="/#how-it-works" className="neon-link text-muted-foreground hover:text-foreground transition-colors font-ui">
+            </a>
+            <a 
+              href="#how-it-works" 
+              onClick={(e) => handleAnchorClick(e, "#how-it-works")}
+              className="neon-link text-muted-foreground hover:text-foreground transition-colors font-ui cursor-pointer"
+            >
               How It Works
-            </Link>
-            <Link to="/#partners" className="neon-link text-muted-foreground hover:text-foreground transition-colors font-ui">
+            </a>
+            <a 
+              href="#partners" 
+              onClick={(e) => handleAnchorClick(e, "#partners")}
+              className="neon-link text-muted-foreground hover:text-foreground transition-colors font-ui cursor-pointer"
+            >
               Partners
-            </Link>
+            </a>
           </div>
 
           {/* Desktop Auth Buttons */}
@@ -62,27 +92,27 @@ export function Navbar() {
           )}
         >
           <div className="flex flex-col gap-4 pt-4">
-            <Link
-              to="/#features"
-              className="text-muted-foreground hover:text-foreground transition-colors font-ui py-2"
-              onClick={() => setIsOpen(false)}
+            <a
+              href="#features"
+              onClick={(e) => handleAnchorClick(e, "#features")}
+              className="text-muted-foreground hover:text-foreground transition-colors font-ui py-2 cursor-pointer"
             >
               Features
-            </Link>
-            <Link
-              to="/#how-it-works"
-              className="text-muted-foreground hover:text-foreground transition-colors font-ui py-2"
-              onClick={() => setIsOpen(false)}
+            </a>
+            <a
+              href="#how-it-works"
+              onClick={(e) => handleAnchorClick(e, "#how-it-works")}
+              className="text-muted-foreground hover:text-foreground transition-colors font-ui py-2 cursor-pointer"
             >
               How It Works
-            </Link>
-            <Link
-              to="/#partners"
-              className="text-muted-foreground hover:text-foreground transition-colors font-ui py-2"
-              onClick={() => setIsOpen(false)}
+            </a>
+            <a
+              href="#partners"
+              onClick={(e) => handleAnchorClick(e, "#partners")}
+              className="text-muted-foreground hover:text-foreground transition-colors font-ui py-2 cursor-pointer"
             >
               Partners
-            </Link>
+            </a>
             <div className="flex flex-col gap-3 pt-4 border-t border-border">
               <NeonButton variant="ghost" className="w-full" asChild>
                 <Link to="/signin" onClick={() => setIsOpen(false)}>
