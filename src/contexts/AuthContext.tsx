@@ -66,13 +66,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       setSession(session);
       setUser(session?.user ?? null);
       
       if (session?.user) {
-        const profileData = await fetchProfile(session.user.id);
-        setProfile(profileData);
+        // Defer Supabase calls to avoid deadlock
+        setTimeout(() => {
+          fetchProfile(session.user.id).then(setProfile);
+        }, 0);
       } else {
         setProfile(null);
       }
@@ -84,11 +86,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const signUp = async (email: string, password: string, metadata?: { first_name?: string; last_name?: string; role?: string }) => {
+    const redirectUrl = `${window.location.origin}/`;
+    
     const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         data: metadata,
+        emailRedirectTo: redirectUrl,
       },
     });
     return { error };
