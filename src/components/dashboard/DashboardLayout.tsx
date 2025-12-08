@@ -12,7 +12,6 @@ import {
   Menu,
   X,
   ChevronRight,
-  Sparkles,
   ClipboardList,
   Users,
   Compass,
@@ -25,6 +24,7 @@ import { NotificationBell } from '@/components/notifications/NotificationBell';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { AIAvatar } from '@/components/ui/AIAvatar';
 import logoDark from '@/assets/intern-us-logo-dark.svg';
 import { cn } from '@/lib/utils';
 
@@ -172,10 +172,14 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             <Link to="/dashboard/career-advisor" className="block">
               <div className="glass-card p-4 relative overflow-hidden hover:border-primary/50 transition-colors cursor-pointer">
                 <div className="absolute -top-10 -right-10 w-24 h-24 bg-secondary/20 rounded-full blur-2xl" />
-                <Sparkles className="h-6 w-6 text-secondary mb-2" />
-                <h4 className="font-ui font-semibold text-foreground text-sm">AI Career Advisor</h4>
-                <p className="text-xs text-muted-foreground mt-1">Get personalized career guidance</p>
-                <Button size="sm" className="mt-3 w-full btn-neon text-xs">
+                <div className="flex items-center gap-3 mb-2">
+                  <AIAvatar emotion="greeting" size="md" />
+                  <div>
+                    <h4 className="font-ui font-semibold text-foreground text-sm">AI Career Advisor</h4>
+                    <p className="text-xs text-muted-foreground">Get personalized guidance</p>
+                  </div>
+                </div>
+                <Button size="sm" className="mt-2 w-full btn-neon text-xs">
                   Get Started
                 </Button>
               </div>

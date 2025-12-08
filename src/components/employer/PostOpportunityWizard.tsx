@@ -16,12 +16,12 @@ import {
   FileText,
   Settings,
   Award,
-  Sparkles,
   Loader2,
   Wand2,
   Check,
   X
 } from 'lucide-react';
+import { AIAvatar } from '@/components/ui/AIAvatar';
 
 interface PostOpportunityWizardProps {
   onComplete: (data: any) => void;
@@ -235,7 +235,7 @@ export function PostOpportunityWizard({ onComplete, onCancel }: PostOpportunityW
             <div className="space-y-6">
               <div className="p-4 rounded-xl bg-accent/10 border border-accent/30">
                 <div className="flex items-start gap-3">
-                  <Wand2 className="h-5 w-5 text-accent mt-0.5" />
+                  <AIAvatar emotion="idea" size="sm" />
                   <div className="flex-1">
                     <h4 className="font-medium text-foreground mb-2">AI Job Description Generator</h4>
                     <Textarea
@@ -258,7 +258,7 @@ export function PostOpportunityWizard({ onComplete, onCancel }: PostOpportunityW
                         </>
                       ) : (
                         <>
-                          <Sparkles className="h-4 w-4 mr-2" />
+                          <Wand2 className="h-4 w-4 mr-2" />
                           Generate with AI
                         </>
                       )}
@@ -565,7 +565,7 @@ export function PostOpportunityWizard({ onComplete, onCancel }: PostOpportunityW
             className="bg-gradient-to-r from-primary to-accent hover:opacity-90"
           >
             Post Opportunity
-            <Sparkles className="h-4 w-4 ml-2" />
+            <ChevronRight className="h-4 w-4 ml-2" />
           </Button>
         )}
       </div>

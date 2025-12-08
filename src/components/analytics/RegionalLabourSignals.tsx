@@ -1,10 +1,11 @@
-import { MapPin, TrendingUp, TrendingDown, Minus, Building2, Briefcase, Sparkles, RefreshCw } from "lucide-react";
+import { MapPin, TrendingUp, TrendingDown, Minus, Building2, RefreshCw } from "lucide-react";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { useRegionalSignals, ProvinceData } from "@/hooks/useRegionalSignals";
 import { Skeleton } from "@/components/ui/skeleton";
+import { AIAvatar } from "@/components/ui/AIAvatar";
 
 const getDemandBadgeVariant = (level: ProvinceData["demandLevel"]) => {
   switch (level) {
@@ -168,8 +169,8 @@ export function RegionalLabourSignals() {
       {/* AI Insights */}
       {data.aiInsights && (
         <div className="mb-6 p-4 rounded-lg bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/20">
-          <div className="flex items-center gap-2 mb-3">
-            <Sparkles className="h-4 w-4 text-primary" />
+          <div className="flex items-center gap-3 mb-3">
+            <AIAvatar emotion="talking" size="sm" />
             <span className="font-heading font-semibold text-sm">AI Market Insights</span>
           </div>
           <div className="text-sm text-muted-foreground whitespace-pre-line leading-relaxed">

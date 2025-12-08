@@ -3,7 +3,6 @@ import {
   BarChart3, 
   TrendingUp, 
   PieChart, 
-  Users, 
   Eye,
   Clock,
   Target
@@ -12,6 +11,7 @@ import { EmployerDashboardLayout } from "@/components/employer/EmployerDashboard
 import { GlassCard } from "@/components/ui/GlassCard";
 import { useEmployerAnalytics } from "@/hooks/useEmployerAnalytics";
 import { Skeleton } from "@/components/ui/skeleton";
+import { AIAvatar } from "@/components/ui/AIAvatar";
 import {
   BarChart,
   Bar,
@@ -268,9 +268,7 @@ export default function EmployerAnalytics() {
         {/* Insights */}
         <GlassCard className="p-6">
           <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 rounded-lg bg-cyan-500/20">
-              <Users className="h-5 w-5 text-cyan-400" />
-            </div>
+            <AIAvatar emotion="idea" size="md" />
             <div>
               <h2 className="font-semibold">AI Insights</h2>
               <p className="text-sm text-muted-foreground">Recommendations for better hiring</p>
