@@ -15,6 +15,7 @@ import NotFound from "./pages/NotFound";
 // Auth pages
 import SignUpPage from "./pages/auth/SignUpPage";
 import SignInPage from "./pages/auth/SignInPage";
+import SignUp from "./pages/SignUp";
 
 // Student Dashboard pages
 import Dashboard from "./pages/Dashboard";
@@ -63,7 +64,7 @@ const App = () => (
             {/* Auth Routes */}
             <Route path="/auth/signup" element={<SignUpPage />} />
             <Route path="/auth/signin" element={<SignInPage />} />
-            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/signup" element={<SignUp />} />
             <Route path="/signin" element={<SignInPage />} />
             
             {/* Protected Student Dashboard Routes */}
@@ -129,6 +130,11 @@ const App = () => (
             } />
 
             {/* Protected Employer Dashboard Routes */}
+            <Route path="/employer/dashboard" element={
+              <ProtectedRoute allowedRoles={['employer']}>
+                <EmployerDashboard />
+              </ProtectedRoute>
+            } />
             <Route path="/employer" element={
               <ProtectedRoute allowedRoles={['employer']}>
                 <EmployerDashboard />
@@ -156,6 +162,11 @@ const App = () => (
             } />
 
             {/* Protected University Dashboard Routes */}
+            <Route path="/university/dashboard" element={
+              <ProtectedRoute allowedRoles={['university']}>
+                <UniversityDashboard />
+              </ProtectedRoute>
+            } />
             <Route path="/university" element={
               <ProtectedRoute allowedRoles={['university']}>
                 <UniversityDashboard />
