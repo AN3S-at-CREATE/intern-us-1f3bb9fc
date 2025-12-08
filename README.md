@@ -1,6 +1,6 @@
 # 🇿🇦 Intern Us — Bridging South African Students & Industry
 
-![Intern Us Banner](intern-us-1f3bb9fc/src/assets/Banner.png)
+![Intern Us Banner](src/assets/Banner.png)
 
 **Intern Us** is a digital-first platform built to **break the “no experience, no job” loop** facing South Africa’s final-year students. We connect universities, students, and employers into a unified ecosystem—designed to make internship discovery, application, placement, and onboarding seamless, inclusive, and impactful.
 
