@@ -33,6 +33,7 @@ import CareerAdvisor from "./pages/dashboard/CareerAdvisor";
 import Events from "./pages/dashboard/Events";
 import NotificationSettingsPage from "./pages/dashboard/NotificationSettings";
 import POPIATrustCenter from "./pages/dashboard/POPIATrustCenter";
+import StudentAnalytics from "./pages/dashboard/StudentAnalytics";
 
 // Employer pages
 import EmployerDashboard from "./pages/employer/EmployerDashboard";
@@ -40,6 +41,7 @@ import PostOpportunity from "./pages/employer/PostOpportunity";
 import OpportunitiesManagement from "./pages/employer/OpportunitiesManagement";
 import ApplicantManagement from "./pages/employer/ApplicantManagement";
 import CompanyProfile from "./pages/employer/CompanyProfile";
+import EmployerAnalytics from "./pages/employer/EmployerAnalytics";
 
 // University pages
 import UniversityDashboard from "./pages/university/UniversityDashboard";
@@ -134,6 +136,11 @@ const App = () => (
                 <POPIATrustCenter />
               </ProtectedRoute>
             } />
+            <Route path="/dashboard/analytics" element={
+              <ProtectedRoute allowedRoles={['student']}>
+                <StudentAnalytics />
+              </ProtectedRoute>
+            } />
 
             {/* Protected Employer Dashboard Routes */}
             <Route path="/employer/dashboard" element={
@@ -164,6 +171,11 @@ const App = () => (
             <Route path="/employer/company" element={
               <ProtectedRoute allowedRoles={['employer']}>
                 <CompanyProfile />
+              </ProtectedRoute>
+            } />
+            <Route path="/employer/analytics" element={
+              <ProtectedRoute allowedRoles={['employer']}>
+                <EmployerAnalytics />
               </ProtectedRoute>
             } />
 
