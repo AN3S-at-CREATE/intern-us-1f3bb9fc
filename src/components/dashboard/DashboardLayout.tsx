@@ -15,7 +15,8 @@ import {
   Sparkles,
   ClipboardList,
   Users,
-  Compass
+  Compass,
+  Calendar
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -36,6 +37,7 @@ const studentNavItems: NavItem[] = [
   { icon: FileText, label: 'CV Builder', href: '/dashboard/cv-builder', badge: 'AI' },
   { icon: Briefcase, label: 'Opportunities', href: '/dashboard/opportunities' },
   { icon: ClipboardList, label: 'Applications', href: '/dashboard/applications' },
+  { icon: Calendar, label: 'Events', href: '/dashboard/events' },
   { icon: GraduationCap, label: 'Skills', href: '/dashboard/skills' },
   { icon: Users, label: 'Community', href: '/dashboard/community' },
   { icon: Compass, label: 'Career Advisor', href: '/dashboard/career-advisor', badge: 'AI' },
