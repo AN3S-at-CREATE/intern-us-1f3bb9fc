@@ -16,7 +16,7 @@ import NotFound from "./pages/NotFound";
 import SignUpPage from "./pages/auth/SignUpPage";
 import SignInPage from "./pages/auth/SignInPage";
 
-// Dashboard pages
+// Student Dashboard pages
 import Dashboard from "./pages/Dashboard";
 import ProfileBuilder from "./pages/dashboard/ProfileBuilder";
 import CVBuilder from "./pages/dashboard/CVBuilder";
@@ -26,6 +26,13 @@ import SkillModules from "./pages/dashboard/SkillModules";
 import ApplicationTracker from "./pages/dashboard/ApplicationTracker";
 import CommunityHub from "./pages/dashboard/CommunityHub";
 import CareerAdvisor from "./pages/dashboard/CareerAdvisor";
+
+// Employer pages
+import EmployerDashboard from "./pages/employer/EmployerDashboard";
+import PostOpportunity from "./pages/employer/PostOpportunity";
+import OpportunitiesManagement from "./pages/employer/OpportunitiesManagement";
+import ApplicantManagement from "./pages/employer/ApplicantManagement";
+import CompanyProfile from "./pages/employer/CompanyProfile";
 
 const queryClient = new QueryClient();
 
@@ -92,6 +99,33 @@ const App = () => (
             <Route path="/dashboard/career-advisor" element={
               <ProtectedRoute allowedRoles={['student']}>
                 <CareerAdvisor />
+              </ProtectedRoute>
+            } />
+
+            {/* Protected Employer Dashboard Routes */}
+            <Route path="/employer" element={
+              <ProtectedRoute allowedRoles={['employer']}>
+                <EmployerDashboard />
+              </ProtectedRoute>
+            } />
+            <Route path="/employer/post-opportunity" element={
+              <ProtectedRoute allowedRoles={['employer']}>
+                <PostOpportunity />
+              </ProtectedRoute>
+            } />
+            <Route path="/employer/opportunities" element={
+              <ProtectedRoute allowedRoles={['employer']}>
+                <OpportunitiesManagement />
+              </ProtectedRoute>
+            } />
+            <Route path="/employer/applicants" element={
+              <ProtectedRoute allowedRoles={['employer']}>
+                <ApplicantManagement />
+              </ProtectedRoute>
+            } />
+            <Route path="/employer/company" element={
+              <ProtectedRoute allowedRoles={['employer']}>
+                <CompanyProfile />
               </ProtectedRoute>
             } />
             
