@@ -112,6 +112,63 @@ export type Database = {
         }
         Relationships: []
       }
+      employer_profiles: {
+        Row: {
+          bbbee_level: string | null
+          company_logo_url: string | null
+          company_name: string
+          company_size: string | null
+          contact_email: string | null
+          contact_phone: string | null
+          created_at: string
+          description: string | null
+          eti_eligible: boolean | null
+          id: string
+          industry: string | null
+          is_verified: boolean | null
+          location: string | null
+          updated_at: string
+          user_id: string
+          website: string | null
+        }
+        Insert: {
+          bbbee_level?: string | null
+          company_logo_url?: string | null
+          company_name: string
+          company_size?: string | null
+          contact_email?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          description?: string | null
+          eti_eligible?: boolean | null
+          id?: string
+          industry?: string | null
+          is_verified?: boolean | null
+          location?: string | null
+          updated_at?: string
+          user_id: string
+          website?: string | null
+        }
+        Update: {
+          bbbee_level?: string | null
+          company_logo_url?: string | null
+          company_name?: string
+          company_size?: string | null
+          contact_email?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          description?: string | null
+          eti_eligible?: boolean | null
+          id?: string
+          industry?: string | null
+          is_verified?: boolean | null
+          location?: string | null
+          updated_at?: string
+          user_id?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
       endorsements: {
         Row: {
           created_at: string
