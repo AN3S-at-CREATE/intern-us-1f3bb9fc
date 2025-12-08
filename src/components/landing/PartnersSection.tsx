@@ -33,7 +33,7 @@ export function PartnersSection() {
 
         {/* Partners Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
-          {partners.map(partner => <GlassCard key={partner.name} className="p-4 sm:p-6 flex items-center justify-center aspect-[16/10] bg-background/80 border border-border/60" glow="none">
+          {partners.map(partner => <GlassCard key={partner.name} glow="none" className="p-4 sm:p-6 flex items-center justify-center aspect-[16/10] bg-background/80 border border-border/60 px-[30px] py-[30px]">
               <AspectRatio ratio={16 / 9} className="flex items-center justify-center w-full">
                 <img src={partner.logo} alt={partner.alt} loading="lazy" className="h-full w-full mix-blend-normal object-fill" />
               </AspectRatio>
