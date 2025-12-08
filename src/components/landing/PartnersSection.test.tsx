@@ -6,12 +6,12 @@ describe("PartnersSection", () => {
     render(<PartnersSection />);
 
     const expectedLogos = [
-      "University of Cape Town logo",
-      "Wits University logo",
-      "Stellenbosch University logo",
-      "Standard Bank logo",
-      "MTN logo",
-      "Vodacom logo",
+      "University of Cape Town partnership placeholder",
+      "University of the Witwatersrand partnership placeholder",
+      "Stellenbosch University partnership placeholder",
+      "Standard Bank partnership placeholder",
+      "MTN Group partnership placeholder",
+      "Vodacom partnership placeholder",
     ];
 
     expectedLogos.forEach((altText) => {

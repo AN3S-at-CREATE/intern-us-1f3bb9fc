@@ -1,38 +1,32 @@
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { GlassCard } from "@/components/ui/GlassCard";
 
+const placeholderLogo = "/partners/partnerships-coming-soon.svg";
+
 const partners = [
   {
     name: "University of Cape Town",
-    logo: "/partners/uct.svg",
-    alt: "University of Cape Town logo",
   },
   {
     name: "University of the Witwatersrand",
-    logo: "/partners/wits.svg",
-    alt: "Wits University logo",
   },
   {
     name: "Stellenbosch University",
-    logo: "/partners/stellenbosch.svg",
-    alt: "Stellenbosch University logo",
   },
   {
     name: "Standard Bank",
-    logo: "/partners/standard-bank.svg",
-    alt: "Standard Bank logo",
   },
   {
     name: "MTN Group",
-    logo: "/partners/mtn.svg",
-    alt: "MTN logo",
   },
   {
     name: "Vodacom",
-    logo: "/partners/vodacom.svg",
-    alt: "Vodacom logo",
   },
-];
+].map((partner) => ({
+  ...partner,
+  logo: placeholderLogo,
+  alt: `${partner.name} partnership placeholder`,
+}));
 
 export function PartnersSection() {
   return (
