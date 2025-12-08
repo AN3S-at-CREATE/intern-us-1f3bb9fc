@@ -1,0 +1,7 @@
+<svg width="320" height="160" viewBox="0 0 320 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="34" y="18" width="252" height="124" rx="20" fill="#E60000" fill-opacity="0.08" stroke="#E60000" stroke-width="4" />
+  <circle cx="160" cy="80" r="42" stroke="#E60000" stroke-width="7" />
+  <circle cx="176" cy="70" r="18" fill="#E60000" fill-opacity="0.2" stroke="#E60000" stroke-width="5" />
+  <text x="60" y="52" fill="#E60000" font-family="'Inter', 'Segoe UI', sans-serif" font-size="18" font-weight="700">Vodacom</text>
+  <text x="60" y="108" fill="#E60000" font-family="'Inter', 'Segoe UI', sans-serif" font-size="14" font-weight="600">South Africa's trusted network</text>
+</svg>

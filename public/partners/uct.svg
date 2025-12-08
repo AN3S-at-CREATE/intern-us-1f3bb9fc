@@ -1,0 +1,9 @@
+<svg width="320" height="160" viewBox="0 0 320 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="40" y="24" width="240" height="112" rx="16" fill="#0056A0" fill-opacity="0.1" stroke="#0056A0" stroke-width="4" />
+  <path d="M100 112C112 92 128 80 144 80C160 80 176 92 188 112" stroke="#0056A0" stroke-width="6" stroke-linecap="round" />
+  <circle cx="220" cy="80" r="22" stroke="#0056A0" stroke-width="6" />
+  <path d="M220 62L220 98" stroke="#0056A0" stroke-width="6" stroke-linecap="round" />
+  <path d="M204 80H236" stroke="#0056A0" stroke-width="6" stroke-linecap="round" />
+  <text x="60" y="66" fill="#0056A0" font-family="'Inter', 'Segoe UI', sans-serif" font-size="22" font-weight="700">UCT</text>
+  <text x="60" y="96" fill="#0056A0" font-family="'Inter', 'Segoe UI', sans-serif" font-size="14" font-weight="600">University of Cape Town</text>
+</svg>

@@ -1,0 +1,7 @@
+<svg width="320" height="160" viewBox="0 0 320 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="34" y="18" width="252" height="124" rx="20" fill="#FFCD00" fill-opacity="0.16" stroke="#FFCD00" stroke-width="4" />
+  <ellipse cx="160" cy="80" rx="90" ry="52" stroke="#1A1A1A" stroke-width="6" fill="#FFCD00" fill-opacity="0.2" />
+  <text x="110" y="88" fill="#1A1A1A" font-family="'Inter', 'Segoe UI', sans-serif" font-size="28" font-weight="800">MTN</text>
+  <text x="60" y="52" fill="#1A1A1A" font-family="'Inter', 'Segoe UI', sans-serif" font-size="18" font-weight="700">MTN Group</text>
+  <text x="60" y="108" fill="#1A1A1A" font-family="'Inter', 'Segoe UI', sans-serif" font-size="14" font-weight="600">Pan-African telecoms leader</text>
+</svg>

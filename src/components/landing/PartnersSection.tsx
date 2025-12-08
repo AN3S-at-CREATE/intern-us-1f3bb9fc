@@ -1,14 +1,37 @@
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { GlassCard } from "@/components/ui/GlassCard";
 
 const partners = [
-  { name: "Standard Bank", initials: "SB" },
-  { name: "Vodacom", initials: "VC" },
-  { name: "Discovery", initials: "DS" },
-  { name: "Nedbank", initials: "NB" },
-  { name: "Sasol", initials: "SA" },
-  { name: "MTN", initials: "MT" },
-  { name: "Anglo American", initials: "AA" },
-  { name: "Deloitte", initials: "DL" },
+  {
+    name: "University of Cape Town",
+    logo: "/partners/uct.svg",
+    alt: "University of Cape Town logo",
+  },
+  {
+    name: "University of the Witwatersrand",
+    logo: "/partners/wits.svg",
+    alt: "Wits University logo",
+  },
+  {
+    name: "Stellenbosch University",
+    logo: "/partners/stellenbosch.svg",
+    alt: "Stellenbosch University logo",
+  },
+  {
+    name: "Standard Bank",
+    logo: "/partners/standard-bank.svg",
+    alt: "Standard Bank logo",
+  },
+  {
+    name: "MTN Group",
+    logo: "/partners/mtn.svg",
+    alt: "MTN logo",
+  },
+  {
+    name: "Vodacom",
+    logo: "/partners/vodacom.svg",
+    alt: "Vodacom logo",
+  },
 ];
 
 export function PartnersSection() {
@@ -18,32 +41,29 @@ export function PartnersSection() {
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 space-y-4">
           <p className="text-muted-foreground font-ui uppercase tracking-wider text-sm">
-            Trusted by Leading Companies
+            Trusted by Leading Companies & Universities
           </p>
           <h2 className="font-heading text-3xl md:text-4xl font-bold">
-            Join{" "}
-            <span className="text-glow text-primary">500+ Partners</span>
+            Join <span className="text-glow text-primary">500+ Partners</span>
           </h2>
         </div>
 
         {/* Partners Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
           {partners.map((partner) => (
             <GlassCard
               key={partner.name}
-              className="p-6 flex items-center justify-center aspect-[2/1]"
+              className="p-4 sm:p-6 flex items-center justify-center aspect-[16/10] bg-background/80 border border-border/60"
               glow="none"
             >
-              <div className="text-center space-y-2">
-                <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-muted/50 border border-border">
-                  <span className="font-heading font-bold text-muted-foreground">
-                    {partner.initials}
-                  </span>
-                </div>
-                <p className="text-sm text-muted-foreground font-ui">
-                  {partner.name}
-                </p>
-              </div>
+              <AspectRatio ratio={16 / 9} className="flex items-center justify-center w-full">
+                <img
+                  src={partner.logo}
+                  alt={partner.alt}
+                  loading="lazy"
+                  className="h-full w-full object-contain mix-blend-normal"
+                />
+              </AspectRatio>
             </GlassCard>
           ))}
         </div>
