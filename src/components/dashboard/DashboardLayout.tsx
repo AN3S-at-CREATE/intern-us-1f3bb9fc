@@ -16,8 +16,11 @@ import {
   ClipboardList,
   Users,
   Compass,
-  Calendar
+  Calendar,
+  Shield,
+  Bell
 } from 'lucide-react';
+import { NotificationBell } from '@/components/notifications/NotificationBell';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -42,7 +45,8 @@ const studentNavItems: NavItem[] = [
   { icon: Users, label: 'Community', href: '/dashboard/community' },
   { icon: Compass, label: 'Career Advisor', href: '/dashboard/career-advisor', badge: 'AI' },
   { icon: MessageSquare, label: 'Interview Prep', href: '/dashboard/interview', badge: 'AI' },
-  { icon: Settings, label: 'Settings', href: '/dashboard/settings' },
+  { icon: Shield, label: 'Privacy Center', href: '/dashboard/privacy' },
+  { icon: Bell, label: 'Notifications', href: '/dashboard/settings/notifications' },
 ];
 
 interface DashboardLayoutProps {
@@ -98,13 +102,16 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           <Link to="/">
             <img src={logoDark} alt="Intern US" className="h-8" />
           </Link>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-          >
-            {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </Button>
+          <div className="flex items-center gap-2">
+            <NotificationBell />
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+            >
+              {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </Button>
+          </div>
         </div>
       </header>
 
@@ -123,10 +130,13 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       )}>
         <div className="flex flex-col h-full">
           {/* Logo */}
-          <div className="h-16 flex items-center px-6 border-b border-sidebar-border">
+          <div className="h-16 flex items-center justify-between px-6 border-b border-sidebar-border">
             <Link to="/">
               <img src={logoDark} alt="Intern US" className="h-8" />
             </Link>
+            <div className="hidden lg:block">
+              <NotificationBell />
+            </div>
           </div>
 
           {/* User Info */}

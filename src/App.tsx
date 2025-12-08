@@ -27,6 +27,8 @@ import ApplicationTracker from "./pages/dashboard/ApplicationTracker";
 import CommunityHub from "./pages/dashboard/CommunityHub";
 import CareerAdvisor from "./pages/dashboard/CareerAdvisor";
 import Events from "./pages/dashboard/Events";
+import NotificationSettingsPage from "./pages/dashboard/NotificationSettings";
+import POPIATrustCenter from "./pages/dashboard/POPIATrustCenter";
 
 // Employer pages
 import EmployerDashboard from "./pages/employer/EmployerDashboard";
@@ -113,6 +115,16 @@ const App = () => (
             <Route path="/dashboard/events" element={
               <ProtectedRoute allowedRoles={['student']}>
                 <Events />
+              </ProtectedRoute>
+            } />
+            <Route path="/dashboard/settings/notifications" element={
+              <ProtectedRoute allowedRoles={['student']}>
+                <NotificationSettingsPage />
+              </ProtectedRoute>
+            } />
+            <Route path="/dashboard/privacy" element={
+              <ProtectedRoute allowedRoles={['student']}>
+                <POPIATrustCenter />
               </ProtectedRoute>
             } />
 
