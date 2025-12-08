@@ -3,21 +3,20 @@ import { NeonButton } from "@/components/ui/NeonButton";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { ArrowRight, Sparkles, TrendingUp, Users, Briefcase } from "lucide-react";
 import heroStudents from "@/assets/landing/hero-students-sa.jpg";
-
 export function HeroSection() {
-  return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+  return <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
       {/* Hero Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
-        style={{ backgroundImage: `url(${heroStudents})` }}
-      />
+      <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20" style={{
+      backgroundImage: `url(${heroStudents})`
+    }} />
       <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
       
       {/* Animated Background Elements */}
-      <div className="absolute inset-0 crystal-pattern opacity-30" />
+      <div className="absolute inset-0 crystal-pattern opacity-25" />
       <div className="absolute top-1/4 -left-32 w-96 h-96 bg-primary/20 rounded-full blur-[128px] animate-float" />
-      <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-secondary/20 rounded-full blur-[128px] animate-float" style={{ animationDelay: "3s" }} />
+      <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-secondary/20 rounded-full blur-[128px] animate-float" style={{
+      animationDelay: "3s"
+    }} />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/10 rounded-full blur-[150px]" />
 
       <div className="container mx-auto px-4 relative z-10">
@@ -76,7 +75,9 @@ export function HeroSection() {
           </div>
 
           {/* Right Content - Dashboard Preview */}
-          <div className="relative animate-fade-in" style={{ animationDelay: "0.3s" }}>
+          <div className="relative animate-fade-in" style={{
+          animationDelay: "0.3s"
+        }}>
             <GlassCard className="p-8 space-y-6" hover={false}>
               {/* Dashboard Header */}
               <div className="flex items-center justify-between">
@@ -86,18 +87,7 @@ export function HeroSection() {
                 </div>
                 <div className="h-16 w-16 rounded-full border-4 border-primary/30 flex items-center justify-center relative">
                   <svg className="absolute inset-0 -rotate-90" viewBox="0 0 64 64">
-                    <circle
-                      cx="32"
-                      cy="32"
-                      r="28"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                      className="text-primary"
-                      strokeDasharray="176"
-                      strokeDashoffset="38.72"
-                      strokeLinecap="round"
-                    />
+                    <circle cx="32" cy="32" r="28" fill="none" stroke="currentColor" strokeWidth="4" className="text-primary" strokeDasharray="176" strokeDashoffset="38.72" strokeLinecap="round" />
                   </svg>
                   <TrendingUp className="h-6 w-6 text-primary" />
                 </div>
@@ -137,15 +127,18 @@ export function HeroSection() {
             </GlassCard>
 
             {/* Floating Elements */}
-            <div className="absolute -top-6 -right-6 p-3 rounded-xl bg-secondary/20 border border-secondary/30 backdrop-blur-sm animate-float" style={{ animationDelay: "1s" }}>
+            <div className="absolute -top-6 -right-6 p-3 rounded-xl bg-secondary/20 border border-secondary/30 backdrop-blur-sm animate-float" style={{
+            animationDelay: "1s"
+          }}>
               <Sparkles className="h-6 w-6 text-secondary" />
             </div>
-            <div className="absolute -bottom-4 -left-4 p-3 rounded-xl bg-accent/20 border border-accent/30 backdrop-blur-sm animate-float" style={{ animationDelay: "2s" }}>
+            <div className="absolute -bottom-4 -left-4 p-3 rounded-xl bg-accent/20 border border-accent/30 backdrop-blur-sm animate-float" style={{
+            animationDelay: "2s"
+          }}>
               <TrendingUp className="h-6 w-6 text-accent" />
             </div>
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 }
