@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 import logoDark from '@/assets/intern-us-logo-dark.svg';
 
 export default function SignInPage() {
@@ -13,13 +14,29 @@ export default function SignInPage() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [seedingUsers, setSeedingUsers] = useState(false);
   
-  const { signIn } = useAuth();
+  const { signIn, profile } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
 
-  const from = (location.state as any)?.from?.pathname || '/dashboard';
+  // Determine redirect based on role
+  const getRedirectPath = (userProfile: typeof profile) => {
+    if (!userProfile) return '/dashboard';
+    switch (userProfile.role) {
+      case 'employer':
+        return '/employer/dashboard';
+      case 'university':
+        return '/university/dashboard';
+      case 'admin':
+      case 'student':
+      default:
+        return '/dashboard';
+    }
+  };
+
+  const from = (location.state as any)?.from?.pathname;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,21 +44,79 @@ export default function SignInPage() {
     
     const { error } = await signIn(email, password);
 
-    setLoading(false);
-
     if (error) {
+      setLoading(false);
       toast({
         title: "Sign in failed",
         description: error.message,
         variant: "destructive",
       });
-    } else {
+      return;
+    }
+
+    // Wait briefly for profile to load
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    
+    // Fetch the profile to determine redirect
+    const { data: { user } } = await supabase.auth.getUser();
+    
+    if (user) {
+      const { data: userProfile } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('user_id', user.id)
+        .single();
+
+      setLoading(false);
       toast({
         title: "Welcome back!",
         description: "Redirecting to your dashboard...",
       });
-      navigate(from, { replace: true });
+      
+      const redirectPath = from || getRedirectPath(userProfile);
+      navigate(redirectPath, { replace: true });
+    } else {
+      setLoading(false);
+      navigate('/dashboard', { replace: true });
     }
+  };
+
+  // Seed demo admin users
+  const seedAdminUsers = async () => {
+    setSeedingUsers(true);
+    const adminEmail = "admin@veralogix-group.org";
+    const adminPassword = "admin";
+    
+    const usersToCreate = [
+      { email: adminEmail, role: "student" as const, firstName: "Student", lastName: "Admin" },
+      { email: `employer.${adminEmail}`, role: "employer" as const, firstName: "Employer", lastName: "Admin" },
+      { email: `university.${adminEmail}`, role: "university" as const, firstName: "University", lastName: "Admin" },
+    ];
+
+    for (const userData of usersToCreate) {
+      const { error } = await supabase.auth.signUp({
+        email: userData.email,
+        password: adminPassword,
+        options: {
+          data: {
+            first_name: userData.firstName,
+            last_name: userData.lastName,
+            role: userData.role,
+          },
+          emailRedirectTo: window.location.origin,
+        },
+      });
+
+      if (error && !error.message.includes('already registered')) {
+        console.error(`Error creating ${userData.role} user:`, error);
+      }
+    }
+
+    setSeedingUsers(false);
+    toast({
+      title: "Demo accounts created!",
+      description: "Use admin@veralogix-group.org (student), employer.admin@... (employer), or university.admin@... (university) with password 'admin'",
+    });
   };
 
   return (
@@ -139,6 +214,28 @@ export default function SignInPage() {
                 )}
               </Button>
             </form>
+
+            <div className="flex items-center gap-4 mt-6">
+              <div className="flex-1 h-px bg-border" />
+              <span className="text-xs text-muted-foreground">or</span>
+              <div className="flex-1 h-px bg-border" />
+            </div>
+
+            <Button 
+              variant="outline" 
+              className="w-full mt-4" 
+              onClick={seedAdminUsers}
+              disabled={seedingUsers}
+            >
+              {seedingUsers ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Creating demo accounts...
+                </>
+              ) : (
+                'Create Demo Accounts'
+              )}
+            </Button>
 
             <p className="text-center text-sm text-muted-foreground mt-6">
               Don't have an account?{' '}
