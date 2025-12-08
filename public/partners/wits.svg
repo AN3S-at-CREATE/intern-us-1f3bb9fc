@@ -1,0 +1,9 @@
+<svg width="320" height="160" viewBox="0 0 320 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="38" y="22" width="244" height="116" rx="18" fill="#002D62" fill-opacity="0.08" stroke="#002D62" stroke-width="4" />
+  <path d="M110 116L130 68L150 116" stroke="#002D62" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M170 116L190 68L210 116" stroke="#002D62" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+  <circle cx="160" cy="74" r="18" stroke="#002D62" stroke-width="6" />
+  <path d="M160 56V92" stroke="#002D62" stroke-width="6" stroke-linecap="round" />
+  <text x="64" y="64" fill="#002D62" font-family="'Inter', 'Segoe UI', sans-serif" font-size="22" font-weight="700">Wits</text>
+  <text x="64" y="94" fill="#002D62" font-family="'Inter', 'Segoe UI', sans-serif" font-size="14" font-weight="600">University of the Witwatersrand</text>
+</svg>

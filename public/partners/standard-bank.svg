@@ -1,0 +1,8 @@
+<svg width="320" height="160" viewBox="0 0 320 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="34" y="18" width="252" height="124" rx="20" fill="#0058A3" fill-opacity="0.06" stroke="#0058A3" stroke-width="4" />
+  <path d="M160 38L200 56V92C200 108 182 124 160 130C138 124 120 108 120 92V56L160 38Z" stroke="#0058A3" stroke-width="6" stroke-linejoin="round" />
+  <path d="M140 70C146 78 152 82 160 82C168 82 174 78 180 70" stroke="#0058A3" stroke-width="6" stroke-linecap="round" />
+  <path d="M140 88C146 96 152 100 160 100C168 100 174 96 180 88" stroke="#0058A3" stroke-width="6" stroke-linecap="round" />
+  <text x="60" y="66" fill="#0058A3" font-family="'Inter', 'Segoe UI', sans-serif" font-size="20" font-weight="700">Standard Bank</text>
+  <text x="60" y="94" fill="#0058A3" font-family="'Inter', 'Segoe UI', sans-serif" font-size="14" font-weight="600">Leading African financial services group</text>
+</svg>
