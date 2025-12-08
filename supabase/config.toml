@@ -20,3 +20,9 @@ verify_jwt = false
 
 [functions.ai-wil-reporting]
 verify_jwt = false
+
+[functions.ai-regional-signals]
+verify_jwt = false
+
+[functions.seed-admin-users]
+verify_jwt = false

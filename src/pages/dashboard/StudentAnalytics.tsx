@@ -12,6 +12,7 @@ import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { useStudentAnalytics } from "@/hooks/useStudentAnalytics";
 import { Skeleton } from "@/components/ui/skeleton";
+import { RegionalLabourSignals } from "@/components/analytics/RegionalLabourSignals";
 import {
   BarChart,
   Bar,
@@ -306,6 +307,9 @@ export default function StudentAnalytics() {
             </div>
           </div>
         </GlassCard>
+
+        {/* Regional Labour Signals */}
+        <RegionalLabourSignals />
       </div>
     </DashboardLayout>
   );
