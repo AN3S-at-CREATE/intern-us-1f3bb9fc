@@ -159,7 +159,9 @@ serve(async (req) => {
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     let aiInsights = null;
 
-    if (LOVABLE_API_KEY && opportunities && opportunities.length > 0) {
+    if (!LOVABLE_API_KEY) {
+      console.warn("LOVABLE_API_KEY is not configured. AI insights will be skipped.");
+    } else if (opportunities && opportunities.length > 0) {
       try {
         const topProvinces = regionalInsights.slice(0, 3);
         const emergingProvinces = regionalInsights.filter(r => r.demandLevel === "emerging");
