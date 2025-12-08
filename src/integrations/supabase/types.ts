@@ -210,6 +210,137 @@ export type Database = {
           },
         ]
       }
+      event_registrations: {
+        Row: {
+          attended_at: string | null
+          check_in_code: string | null
+          created_at: string
+          event_id: string
+          id: string
+          notes: string | null
+          registered_at: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          attended_at?: string | null
+          check_in_code?: string | null
+          created_at?: string
+          event_id: string
+          id?: string
+          notes?: string | null
+          registered_at?: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          attended_at?: string | null
+          check_in_code?: string | null
+          created_at?: string
+          event_id?: string
+          id?: string
+          notes?: string | null
+          registered_at?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_registrations_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      events: {
+        Row: {
+          attendance_count: number
+          company_logo_url: string | null
+          company_name: string | null
+          cover_image_url: string | null
+          created_at: string
+          description: string | null
+          end_date: string
+          event_type: string
+          id: string
+          industries: string[] | null
+          is_active: boolean
+          is_featured: boolean
+          location: string | null
+          location_type: string
+          max_attendees: number | null
+          organizer_id: string
+          organizer_type: string
+          registration_count: number
+          registration_deadline: string | null
+          start_date: string
+          target_roles: string[] | null
+          title: string
+          updated_at: string
+          venue_address: string | null
+          virtual_link: string | null
+        }
+        Insert: {
+          attendance_count?: number
+          company_logo_url?: string | null
+          company_name?: string | null
+          cover_image_url?: string | null
+          created_at?: string
+          description?: string | null
+          end_date: string
+          event_type?: string
+          id?: string
+          industries?: string[] | null
+          is_active?: boolean
+          is_featured?: boolean
+          location?: string | null
+          location_type?: string
+          max_attendees?: number | null
+          organizer_id: string
+          organizer_type?: string
+          registration_count?: number
+          registration_deadline?: string | null
+          start_date: string
+          target_roles?: string[] | null
+          title: string
+          updated_at?: string
+          venue_address?: string | null
+          virtual_link?: string | null
+        }
+        Update: {
+          attendance_count?: number
+          company_logo_url?: string | null
+          company_name?: string | null
+          cover_image_url?: string | null
+          created_at?: string
+          description?: string | null
+          end_date?: string
+          event_type?: string
+          id?: string
+          industries?: string[] | null
+          is_active?: boolean
+          is_featured?: boolean
+          location?: string | null
+          location_type?: string
+          max_attendees?: number | null
+          organizer_id?: string
+          organizer_type?: string
+          registration_count?: number
+          registration_deadline?: string | null
+          start_date?: string
+          target_roles?: string[] | null
+          title?: string
+          updated_at?: string
+          venue_address?: string | null
+          virtual_link?: string | null
+        }
+        Relationships: []
+      }
       mentor_connections: {
         Row: {
           connected_at: string | null

@@ -26,6 +26,7 @@ import SkillModules from "./pages/dashboard/SkillModules";
 import ApplicationTracker from "./pages/dashboard/ApplicationTracker";
 import CommunityHub from "./pages/dashboard/CommunityHub";
 import CareerAdvisor from "./pages/dashboard/CareerAdvisor";
+import Events from "./pages/dashboard/Events";
 
 // Employer pages
 import EmployerDashboard from "./pages/employer/EmployerDashboard";
@@ -107,6 +108,11 @@ const App = () => (
             <Route path="/dashboard/career-advisor" element={
               <ProtectedRoute allowedRoles={['student']}>
                 <CareerAdvisor />
+              </ProtectedRoute>
+            } />
+            <Route path="/dashboard/events" element={
+              <ProtectedRoute allowedRoles={['student']}>
+                <Events />
               </ProtectedRoute>
             } />
 
