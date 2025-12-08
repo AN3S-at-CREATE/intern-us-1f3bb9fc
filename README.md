@@ -1,220 +1,107 @@
-# Intern US – Bridging South African Students and Industry
+# 🇿🇦 Intern Us — Bridging South African Students & Industry
 
-Intern US is a digital platform designed to help South African final-year students break the **“no experience, no job”** loop by connecting them with high-quality internships, WIL (Work-Integrated Learning) placements, and graduate opportunities. :contentReference[oaicite:0]{index=0}  
+![Intern Us Banner](src/assets/Banner.png)
 
-Unlike generic job boards, Intern US focuses on **final-year and penultimate-year students** and the employers who want a curated, work-ready talent pipeline, not thousands of random CVs.   
+**Intern Us** is a digital-first platform built to **break the “no experience, no job” loop** facing South Africa’s final-year students. We connect universities, students, and employers into a unified ecosystem—designed to make internship discovery, application, placement, and onboarding seamless, inclusive, and impactful.
 
----
-
-## Why Intern US Exists
-
-South Africa’s youth employment landscape is brutal:
-
-- **46% youth unemployment** (ages 15–34), with ~3.4 million young people out of work.  
-- **58.7% of unemployed youth have no prior work experience**, locking them out of “entry-level” roles that still demand experience.   
-- Job-seeking is expensive: young people spend around **R938/month** on transport, data, printing, and admin just to look for work. :contentReference[oaicite:3]{index=3}  
-- Employers complain of “**credentialed but not always competent**” graduates and struggle to recruit critical skills, even while unemployment stays high.   
-
-At the same time, the ecosystem is **crowded and fragmented**:
-
-- Government-backed, zero-rated platforms like **SAYouth.mobi** + Harambee dominate high-volume matching.  
-- Universities run their own closed career portals and fairs.  
-- Private job boards and agencies chase the same graduates with transactional CV-matching.   
-
-Intern US is built to occupy the **“missing middle”**:  
-> Quality-at-scale, final-year focused, skills-aware matching that serves students, employers, and universities at the same time.   
+> 💼 62% of youth aged 15–24 are unemployed.
+>  
+> 😰 58.7% of them have **no work experience**.
+>  
+> 🚀 Intern Us fixes that with a platform built for students, not just recruiters.
 
 ---
 
-## Vision & Positioning
+## 🔧 Core Features
 
-**Vision:**  
-A mobile-first, data-light, POPIA-compliant platform that turns final-year students into **visible, verifiable, and work-ready talent**, while giving employers and universities a shared infrastructure for internships, WIL, and graduate pathways.   
-
-**Core Differentiators**
-
-- **Final-year niche:** Not “all students & graduates” – Intern US optimises for penultimate + final year students and recent grads.   
-- **Career-readiness, not just job listings:** From skills gaps and soft-skills coaching to interview prep and labor-law basics.   
-- **SA-specific by design:** B-BBEE filters, SETA-aligned sectors, local salary benchmarks, and multi-language support.   
-- **Built for low-data, high-mobile reality:** Progressive web app, WhatsApp/SMS alerts, offline-aware modules, and zero-rating as a strategic goal.   
-
----
-
-## Core Experience by Persona
-
-### For Students
-
-Help final-year students go from “I have a degree but no idea where to start” to “I’m shortlisted, prepared, and know my worth”.
-
-Key capabilities:   
-
-- **Smart Profile & CV Builder**
-  - ATS-optimised CV templates (SA-norms aware).
-  - AI CV review: structure, clarity, and keyword alignment.
-  - Portfolio sections for projects, societies, and WIL.
-
-- **AI-Powered Job & Internship Matching**
-  - SA-specific geo-targeting (province / city / remote).
-  - Filters for **B-BBEE level**, sector, stipend, and remote/hybrid.
-  - AI matcher that prioritises **fit and feasibility**, not just keywords.
-
-- **Application Tracker**
-  - Unified Kanban view: _Saved → Applied → Interviewing → Offer → Hired_.
-  - Works even if the original application happened off-platform.
-
-- **Career-Readiness Tools**
-  - AI mock interviews (voice/video) tuned to SA sectors (banking, mining, tech, etc.).
-  - Soft-skills micro-modules (communication, teamwork, problem-solving) in an SA context.
-  - Digital skills gap analyser with course recommendations.
-
-- **Market Reality & Rights**
-  - Salary benchmarks by role + province.
-  - Plain-language labor-law primers for interns and entry-level employees.
-  - Resource library on tax, transport, stipends, and basic financial literacy.
-
-- **Mentorship & Community**
-  - Alumni / mentor connector (by sector, location, and background).
-  - Peer forums and Q&A channels.
-  - Template library for professional email, acceptance/rejection letters, and follow-ups.
+- 🎓 **Student Profile Builder** – Build CVs, upload certificates, record voice intros, and earn micro-credentials.
+- 🧠 **AI-Powered Matching** – Match students with internships, WIL, and jobs by location, skills, B-BBEE, and more.
+- 📦 **Application Tracker** – Kanban-style tracking for saved, applied, interviewed, and hired roles.
+- 🏢 **Employer Dashboard** – Post, screen, and manage interns with built-in compliance and ETI tools.
+- 🏅 **Skills Hub** – Mobile-first modules with badges to boost soft skills and employability.
+- 🔄 **Mentor & University Integrations** – Syncs with SETAs and universities for verified WIL pathways.
+- 📱 **Mobile-First, Zero-Rated Access** – Runs on 3G in rural areas, includes offline mode and voice-based CVs.
+- 🔒 **POPIA-Compliant & Inclusive** – Fully localised, privacy-first, and designed for WCAG accessibility standards.
 
 ---
 
-### For Employers
+## 📈 Why Intern Us?
 
-Reduce risk and admin while **improving B-BBEE, ETI, and learnership ROI**.   
+### 👩‍🎓 For Students
+- Saves an average of **R938/month** on job-seeking costs
+- Unlocks networks through **peer referrals** and **community hubs**
+- Offers multilingual voice-first onboarding, even on low-end phones
 
-Key capabilities:
+### 🧑‍💼 For Employers
+- Reduces time-to-hire and compliance complexity
+- Leverages **B-BBEE**, **Section 12H**, and **ETI** tax incentives
+- Automates intern onboarding, screening, and mentorship toolkits
 
-- **Curated Final-Year Talent Pool**
-  - Filter by institution, programme, province, B-BBEE targets, and skills.
-  - Clear differentiation between internship, WIL, and graduate roles.
-
-- **Smart Screening**
-  - Structured profiles that go beyond CV PDFs.
-  - Optional psychometric and skills assessments.
-  - AI-assisted shortlisting and “fit” scoring.
-
-- **Compliance-Ready Pipelines**
-  - Support for Section 12H learnerships, ETI, and B-BBEE skills development.
-  - Transparent, auditable workflows for internships and WIL placements.   
-
-- **Internship / WIL Programme Toolkit**
-  - Mentor onboarding packs and scheduling aids.
-  - Templates for learning plans, feedback cycles, and performance tracking.
-  - Program health metrics (completion, absorption, and retention rates).
+### 🏛 For Universities
+- Ensures WIL is integrated into academic pathways
+- Tracks placement outcomes and builds SETA-aligned compliance
+- Provides shared dashboards for curriculum feedback loops
 
 ---
 
-### For Universities & TVETs
+## ⚖️ Compliance & Accessibility
 
-Turn fragmented, one-off efforts into a unified **“campus-to-career infrastructure”**.   
-
-Key capabilities:
-
-- **WIL & Internship Management**
-  - Central place to manage placements, partner companies, and student progress.
-  - Configurable to different faculty rules, SETA requirements, and accreditation flows.
-
-- **Data & Analytics**
-  - Graduate outcomes dashboards (placements, sectors, time-to-first-role).
-  - Employer feedback loops into curriculum discussions.
-
-- **Integration-First Approach**
-  - Designed to **augment**, not replace, existing career portals where they already exist.
-  - APIs + SSO hooks for SIS/LMS/HEMIS as the ecosystem matures.   
+- ✅ Fully **POPIA** aligned: transparency, consent, breach notifications:contentReference[oaicite:0]{index=0}  
+- ♿ **WCAG 2.1 AA** compliant: screen readers, keyboard navigation, alt text, and contrast optimized:contentReference[oaicite:1]{index=1}  
+- 🌍 **Multilingual** support & **voice-note** applications for accessibility in rural areas:contentReference[oaicite:2]{index=2}  
+- 🔐 Secure connections, encrypted data handling, audit-ready policies:contentReference[oaicite:3]{index=3}
 
 ---
 
-## Feature Overview
+## 💰 Sustainability & Monetisation
 
-From the refined feature set & AI design docs:   
+Intern Us is built on a blended revenue model:
 
-**Career Tools**
-
-- SA-specific search (geo + B-BBEE filters)  
-- AI matcher and “What’s Next” roadmap  
-- Unified application tracker  
-- ATS-aware CV + AI CV review  
-- AI cover-letter generator  
-
-**Skills & Interview Readiness**
-
-- Soft-skills & digital-skills micro-modules  
-- AI mock interviewer (video/voice)  
-- Behavioral question coach (STAR method)  
-- Psychometric/aptitude practice library  
-
-**Market, Law & Logistics**
-
-- Salary benchmarking  
-- Labor-law primer (interns + entry-level)  
-- Resource library (transport, tax, stipends, medical aid basics)  
-
-**Mentorship & Community**
-
-- Mentor / alumni connector  
-- Peer forums  
-- SA-style communication templates  
-
-**Personalisation & Access**
-
-- WhatsApp + SMS alerts  
-- Multi-language support for SA’s 11 official languages (roadmap)  
-- Offline-friendly content and low-data design  
+- Employer subscription tiers with B-BBEE integration tools
+- Value-add services like psychometric testing & screening APIs
+- White-label deployment for academic institutions and SETAs
+- Government partnerships & donor funding for accessibility initiatives:contentReference[oaicite:4]{index=4}
 
 ---
 
-## Architecture (Proposed)
+## 🛠 Tech Stack
 
-> This section should be updated to match the actual implementation of this repo. The outline below assumes a modern JS + cloud backend stack.
-
-**Frontend**
-
-- [Next.js] – React-based app with server-side rendering and API routes  
-- [TypeScript] – typed components and domain logic  
-- [Tailwind CSS] – utility-first styling for consistent, responsive UI  
-
-**Backend & Infrastructure (Example)**
-
-- Firebase / Supabase (Auth, DB, Storage)  
-- Optional: Cloud Functions for matching, notifications, and scheduled jobs  
-- Integration endpoints for WhatsApp, SMS, and email providers  
-
-**AI Layer**
-
-- External LLM APIs for:
-  - CV review + cover letters  
-  - Interview coaching  
-  - “What’s Next” guidance and skills gap analysis  
-
-- Future: custom fine-tuned models on anonymised, POPIA-compliant data.   
-
-**Compliance & Trust**
-
-- POPIA-aligned data flows (explicit consent, purpose limitation, minimal collection).   
-- WCAG-aligned accessibility, particularly on mobile.   
-- Audit trails for key decisions (matching, shortlisting, acceptance/rejection).   
+- **Frontend**: Next.js + Tailwind CSS
+- **Backend**: Firebase / Firestore + Cloud Functions
+- **Auth**: Firebase Auth (Multi-Tenant Setup)
+- **Hosting**: Vercel / Netlify (South African edge nodes for latency)
+- **AI Matching**: Custom LLM Matching Layer (Built in Gemini/Firebase Studio)
+- **Compliance Layer**: POPIA Logger + Anonymised Data Flow Engine
 
 ---
 
-## Getting Started (Developer Setup)
+## 🧪 Future Enhancements
 
-> Adjust commands to match your actual stack.
+- 🧬 **Voice-based CV generator**
+- 🌐 **Offline PWA with full career toolkit**
+- 🎓 **Learning → Placement auto-conversion engine**
+- 🔍 **Real-time ETI & 12H tax incentive dashboards for HR**
+- 🤝 **University + Employer co-designed curriculum AI assistant**
 
-```bash
-# 1. Clone the repo
-git clone https://github.com/<ORG_OR_USER>/intern-us.git
-cd intern-us
+---
 
-# 2. Install dependencies
-npm install
-# or
-pnpm install
+## 📎 Documentation & Reports
 
-# 3. Set environment variables
-cp .env.example .env.local
-# Fill in API keys, Firebase/DB config, etc.
+- [Strategic Blueprint PDF](docs/Strategic_Blueprint_InternUs_2025.pdf)
+- [UX & Compliance Audit](docs/Website_Compliance_Report.pdf)
+- [Dual Perspective Analysis (Student vs. Employer)](docs/InternUS_Student_Employer_Strategy.pdf)
 
-# 4. Run the dev server
-npm run dev
-# Visit http://localhost:3000
+---
+
+## 🤝 Contributing
+
+> We're building a future where **every student has a shot at success**, no matter their zip code or network.
+
+Want to join the mission?  
+Fork, raise an issue, or hit us up at [hello@internus.co.za](mailto:hello@internus.co.za)
+
+---
+
+## 🛡 License
+
+MIT © Intern Us | Powered by South Africa’s Youth Employment Movement 🚀
