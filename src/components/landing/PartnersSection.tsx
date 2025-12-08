@@ -1,36 +1,25 @@
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { GlassCard } from "@/components/ui/GlassCard";
-
 const placeholderLogo = "/partners/partnerships-coming-soon.svg";
-
-const partners = [
-  {
-    name: "University of Cape Town",
-  },
-  {
-    name: "University of the Witwatersrand",
-  },
-  {
-    name: "Stellenbosch University",
-  },
-  {
-    name: "Standard Bank",
-  },
-  {
-    name: "MTN Group",
-  },
-  {
-    name: "Vodacom",
-  },
-].map((partner) => ({
+const partners = [{
+  name: "University of Cape Town"
+}, {
+  name: "University of the Witwatersrand"
+}, {
+  name: "Stellenbosch University"
+}, {
+  name: "Standard Bank"
+}, {
+  name: "MTN Group"
+}, {
+  name: "Vodacom"
+}].map(partner => ({
   ...partner,
   logo: placeholderLogo,
-  alt: `${partner.name} partnership placeholder`,
+  alt: `${partner.name} partnership placeholder`
 }));
-
 export function PartnersSection() {
-  return (
-    <section className="py-24 relative" id="partners">
+  return <section className="py-24 relative" id="partners">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 space-y-4">
@@ -44,24 +33,12 @@ export function PartnersSection() {
 
         {/* Partners Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
-          {partners.map((partner) => (
-            <GlassCard
-              key={partner.name}
-              className="p-4 sm:p-6 flex items-center justify-center aspect-[16/10] bg-background/80 border border-border/60"
-              glow="none"
-            >
+          {partners.map(partner => <GlassCard key={partner.name} className="p-4 sm:p-6 flex items-center justify-center aspect-[16/10] bg-background/80 border border-border/60" glow="none">
               <AspectRatio ratio={16 / 9} className="flex items-center justify-center w-full">
-                <img
-                  src={partner.logo}
-                  alt={partner.alt}
-                  loading="lazy"
-                  className="h-full w-full object-contain mix-blend-normal"
-                />
+                <img src={partner.logo} alt={partner.alt} loading="lazy" className="h-full w-full mix-blend-normal object-fill" />
               </AspectRatio>
-            </GlassCard>
-          ))}
+            </GlassCard>)}
         </div>
       </div>
-    </section>
-  );
+    </section>;
 }
