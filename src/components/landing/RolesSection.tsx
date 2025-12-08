@@ -2,6 +2,9 @@ import { Link } from "react-router-dom";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { NeonButton } from "@/components/ui/NeonButton";
 import { GraduationCap, Building2, School, ArrowRight } from "lucide-react";
+import studentImage from "@/assets/landing/student-studying.jpg";
+import employerImage from "@/assets/landing/employers-office.jpg";
+import universityImage from "@/assets/landing/university-campus.jpg";
 
 const roles = [
   {
@@ -13,6 +16,7 @@ const roles = [
     glow: "magenta" as const,
     gradient: "from-secondary to-neon-purple",
     featured: false,
+    image: employerImage,
   },
   {
     icon: GraduationCap,
@@ -23,6 +27,7 @@ const roles = [
     glow: "cyan" as const,
     gradient: "from-primary to-accent",
     featured: true,
+    image: studentImage,
   },
   {
     icon: School,
@@ -33,6 +38,7 @@ const roles = [
     glow: "violet" as const,
     gradient: "from-accent to-primary",
     featured: false,
+    image: universityImage,
   },
 ];
 
@@ -60,49 +66,60 @@ export function RolesSection() {
             <GlassCard
               key={role.title}
               glow={role.glow}
-              className={`p-8 space-y-6 group transition-all duration-300 ${
+              className={`overflow-hidden space-y-0 group transition-all duration-300 ${
                 role.featured 
                   ? "md:scale-105 md:-my-4 ring-2 ring-primary/30 hover:ring-primary hover:shadow-[0_0_60px_-10px_hsl(var(--neon-cyan))]" 
                   : "hover:shadow-[0_0_40px_-10px_hsl(var(--neon-magenta))]"
               }`}
               style={{ animationDelay: `${index * 0.15}s` }}
             >
-              {/* Icon */}
-              <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${role.gradient} shadow-neon`}>
-                <role.icon className="h-8 w-8 text-primary-foreground" />
+              {/* Role Image */}
+              <div className="relative h-40 overflow-hidden">
+                <img 
+                  src={role.image} 
+                  alt={`${role.title} in South Africa`}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent" />
+                {/* Icon overlay */}
+                <div className={`absolute bottom-4 left-6 inline-flex p-3 rounded-xl bg-gradient-to-br ${role.gradient} shadow-lg`}>
+                  <role.icon className="h-6 w-6 text-primary-foreground" />
+                </div>
               </div>
 
-              {/* Content */}
-              <div className="space-y-3">
-                <h3 className="font-heading text-2xl font-bold text-foreground">
-                  {role.title}
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {role.description}
-                </p>
+              <div className="p-6 space-y-4">
+                {/* Content */}
+                <div className="space-y-2">
+                  <h3 className="font-heading text-2xl font-bold text-foreground">
+                    {role.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {role.description}
+                  </p>
+                </div>
+
+                {/* Features */}
+                <ul className="space-y-1.5">
+                  {role.features.map((feature) => (
+                    <li key={feature} className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+
+                {/* CTA */}
+                <NeonButton 
+                  variant={role.glow === "cyan" ? "default" : "ghost"} 
+                  className="w-full group/btn"
+                  asChild
+                >
+                  <Link to={role.href}>
+                    Get Started
+                    <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
+                  </Link>
+                </NeonButton>
               </div>
-
-              {/* Features */}
-              <ul className="space-y-2">
-                {role.features.map((feature) => (
-                  <li key={feature} className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <div className="h-1.5 w-1.5 rounded-full bg-primary" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-
-              {/* CTA */}
-              <NeonButton 
-                variant={role.glow === "cyan" ? "default" : "ghost"} 
-                className="w-full group/btn"
-                asChild
-              >
-                <Link to={role.href}>
-                  Get Started
-                  <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
-                </Link>
-              </NeonButton>
             </GlassCard>
           ))}
         </div>
