@@ -5,15 +5,6 @@ import { GraduationCap, Building2, School, ArrowRight } from "lucide-react";
 
 const roles = [
   {
-    icon: GraduationCap,
-    title: "Students",
-    description: "Build your profile, get matched with opportunities, and launch your career with AI-powered tools designed for South African graduates.",
-    features: ["AI CV Builder", "Smart Job Matching", "Skills Modules", "Interview Prep"],
-    href: "/get-started?role=student",
-    glow: "cyan" as const,
-    gradient: "from-primary to-accent",
-  },
-  {
     icon: Building2,
     title: "Employers",
     description: "Find pre-screened, work-ready candidates. Post opportunities and let our AI match you with the best talent from across South Africa.",
@@ -21,6 +12,17 @@ const roles = [
     href: "/get-started?role=employer",
     glow: "magenta" as const,
     gradient: "from-secondary to-neon-purple",
+    featured: false,
+  },
+  {
+    icon: GraduationCap,
+    title: "Students",
+    description: "Build your profile, get matched with opportunities, and launch your career with AI-powered tools designed for South African graduates.",
+    features: ["AI CV Builder", "Smart Job Matching", "Skills Modules", "Interview Prep"],
+    href: "/get-started?role=student",
+    glow: "cyan" as const,
+    gradient: "from-primary to-accent",
+    featured: true,
   },
   {
     icon: School,
@@ -30,6 +32,7 @@ const roles = [
     href: "/get-started?role=university",
     glow: "violet" as const,
     gradient: "from-accent to-primary",
+    featured: false,
   },
 ];
 
@@ -57,7 +60,11 @@ export function RolesSection() {
             <GlassCard
               key={role.title}
               glow={role.glow}
-              className="p-8 space-y-6 group"
+              className={`p-8 space-y-6 group transition-all duration-300 ${
+                role.featured 
+                  ? "md:scale-105 md:-my-4 ring-2 ring-primary/30 hover:ring-primary hover:shadow-[0_0_60px_-10px_hsl(var(--neon-cyan))]" 
+                  : "hover:shadow-[0_0_40px_-10px_hsl(var(--neon-magenta))]"
+              }`}
               style={{ animationDelay: `${index * 0.15}s` }}
             >
               {/* Icon */}
