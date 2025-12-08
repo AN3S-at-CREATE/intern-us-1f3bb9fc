@@ -14,7 +14,8 @@ import {
   X,
   Plus,
   Bell,
-  ChevronDown
+  ChevronDown,
+  BarChart3
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
@@ -33,6 +34,7 @@ const navItems = [
   { path: '/employer', icon: LayoutDashboard, label: 'Dashboard' },
   { path: '/employer/opportunities', icon: Briefcase, label: 'Opportunities' },
   { path: '/employer/applicants', icon: Users, label: 'Applicants' },
+  { path: '/employer/analytics', icon: BarChart3, label: 'Analytics' },
   { path: '/employer/company', icon: Building2, label: 'Company Profile' },
 ];
 

@@ -18,7 +18,8 @@ import {
   Compass,
   Calendar,
   Shield,
-  Bell
+  Bell,
+  BarChart3
 } from 'lucide-react';
 import { NotificationBell } from '@/components/notifications/NotificationBell';
 import { useAuth } from '@/contexts/AuthContext';
@@ -45,6 +46,7 @@ const studentNavItems: NavItem[] = [
   { icon: Users, label: 'Community', href: '/dashboard/community' },
   { icon: Compass, label: 'Career Advisor', href: '/dashboard/career-advisor', badge: 'AI' },
   { icon: MessageSquare, label: 'Interview Prep', href: '/dashboard/interview', badge: 'AI' },
+  { icon: BarChart3, label: 'Analytics', href: '/dashboard/analytics' },
   { icon: Shield, label: 'Privacy Center', href: '/dashboard/privacy' },
   { icon: Bell, label: 'Notifications', href: '/dashboard/settings/notifications' },
 ];
