@@ -650,6 +650,7 @@ export type Database = {
           profile_completeness: number | null
           qualification: string | null
           race: string | null
+          university_user_id: string | null
           updated_at: string
           user_id: string
           year_of_study: number | null
@@ -677,6 +678,7 @@ export type Database = {
           profile_completeness?: number | null
           qualification?: string | null
           race?: string | null
+          university_user_id?: string | null
           updated_at?: string
           user_id: string
           year_of_study?: number | null
@@ -704,6 +706,7 @@ export type Database = {
           profile_completeness?: number | null
           qualification?: string | null
           race?: string | null
+          university_user_id?: string | null
           updated_at?: string
           user_id?: string
           year_of_study?: number | null
@@ -774,6 +777,137 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      university_profiles: {
+        Row: {
+          address: string | null
+          contact_email: string | null
+          contact_phone: string | null
+          created_at: string
+          department: string | null
+          faculty: string | null
+          id: string
+          institution_name: string
+          institution_type: string | null
+          is_verified: boolean | null
+          logo_url: string | null
+          updated_at: string
+          user_id: string
+          website: string | null
+        }
+        Insert: {
+          address?: string | null
+          contact_email?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          department?: string | null
+          faculty?: string | null
+          id?: string
+          institution_name: string
+          institution_type?: string | null
+          is_verified?: boolean | null
+          logo_url?: string | null
+          updated_at?: string
+          user_id: string
+          website?: string | null
+        }
+        Update: {
+          address?: string | null
+          contact_email?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          department?: string | null
+          faculty?: string | null
+          id?: string
+          institution_name?: string
+          institution_type?: string | null
+          is_verified?: boolean | null
+          logo_url?: string | null
+          updated_at?: string
+          user_id?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
+      wil_placements: {
+        Row: {
+          assessment_score: number | null
+          created_at: string
+          employer_feedback: string | null
+          employer_name: string | null
+          end_date: string | null
+          hours_completed: number | null
+          hours_required: number | null
+          id: string
+          notes: string | null
+          opportunity_id: string | null
+          placement_type: string
+          risk_factors: Json | null
+          risk_level: string | null
+          start_date: string | null
+          status: string
+          student_feedback: string | null
+          student_user_id: string
+          supervisor_email: string | null
+          supervisor_name: string | null
+          university_user_id: string
+          updated_at: string
+        }
+        Insert: {
+          assessment_score?: number | null
+          created_at?: string
+          employer_feedback?: string | null
+          employer_name?: string | null
+          end_date?: string | null
+          hours_completed?: number | null
+          hours_required?: number | null
+          id?: string
+          notes?: string | null
+          opportunity_id?: string | null
+          placement_type?: string
+          risk_factors?: Json | null
+          risk_level?: string | null
+          start_date?: string | null
+          status?: string
+          student_feedback?: string | null
+          student_user_id: string
+          supervisor_email?: string | null
+          supervisor_name?: string | null
+          university_user_id: string
+          updated_at?: string
+        }
+        Update: {
+          assessment_score?: number | null
+          created_at?: string
+          employer_feedback?: string | null
+          employer_name?: string | null
+          end_date?: string | null
+          hours_completed?: number | null
+          hours_required?: number | null
+          id?: string
+          notes?: string | null
+          opportunity_id?: string | null
+          placement_type?: string
+          risk_factors?: Json | null
+          risk_level?: string | null
+          start_date?: string | null
+          status?: string
+          student_feedback?: string | null
+          student_user_id?: string
+          supervisor_email?: string | null
+          supervisor_name?: string | null
+          university_user_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wil_placements_opportunity_id_fkey"
+            columns: ["opportunity_id"]
+            isOneToOne: false
+            referencedRelation: "opportunities"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       work_experience: {
         Row: {

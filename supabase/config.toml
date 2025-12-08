@@ -17,3 +17,6 @@ verify_jwt = false
 
 [functions.ai-job-description]
 verify_jwt = false
+
+[functions.ai-wil-reporting]
+verify_jwt = false

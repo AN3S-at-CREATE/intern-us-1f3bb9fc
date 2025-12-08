@@ -34,6 +34,14 @@ import OpportunitiesManagement from "./pages/employer/OpportunitiesManagement";
 import ApplicantManagement from "./pages/employer/ApplicantManagement";
 import CompanyProfile from "./pages/employer/CompanyProfile";
 
+// University pages
+import UniversityDashboard from "./pages/university/UniversityDashboard";
+import StudentPlacements from "./pages/university/StudentPlacements";
+import AtRiskStudents from "./pages/university/AtRiskStudents";
+import WILReports from "./pages/university/WILReports";
+import UniversityAnalytics from "./pages/university/UniversityAnalytics";
+import UniversityProfile from "./pages/university/UniversityProfile";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -126,6 +134,38 @@ const App = () => (
             <Route path="/employer/company" element={
               <ProtectedRoute allowedRoles={['employer']}>
                 <CompanyProfile />
+              </ProtectedRoute>
+            } />
+
+            {/* Protected University Dashboard Routes */}
+            <Route path="/university" element={
+              <ProtectedRoute allowedRoles={['university']}>
+                <UniversityDashboard />
+              </ProtectedRoute>
+            } />
+            <Route path="/university/placements" element={
+              <ProtectedRoute allowedRoles={['university']}>
+                <StudentPlacements />
+              </ProtectedRoute>
+            } />
+            <Route path="/university/at-risk" element={
+              <ProtectedRoute allowedRoles={['university']}>
+                <AtRiskStudents />
+              </ProtectedRoute>
+            } />
+            <Route path="/university/reports" element={
+              <ProtectedRoute allowedRoles={['university']}>
+                <WILReports />
+              </ProtectedRoute>
+            } />
+            <Route path="/university/analytics" element={
+              <ProtectedRoute allowedRoles={['university']}>
+                <UniversityAnalytics />
+              </ProtectedRoute>
+            } />
+            <Route path="/university/profile" element={
+              <ProtectedRoute allowedRoles={['university']}>
+                <UniversityProfile />
               </ProtectedRoute>
             } />
             
