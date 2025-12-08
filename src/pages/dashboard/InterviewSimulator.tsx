@@ -5,13 +5,13 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Progress } from '@/components/ui/progress';
 import { useAIInterview } from '@/hooks/useAIInterview';
+import { AIAvatar } from '@/components/ui/AIAvatar';
 import { 
   Mic, 
   Play, 
   RotateCcw, 
   ChevronRight, 
   ChevronLeft,
-  Sparkles,
   Target,
   TrendingUp,
   MessageSquare,
@@ -109,10 +109,8 @@ export default function InterviewSimulator() {
     <DashboardLayout>
       <div className="space-y-6">
         {/* Header */}
-        <div className="flex items-center gap-3">
-          <div className="p-3 rounded-xl bg-gradient-to-br from-accent/20 to-accent/5 border border-accent/30">
-            <Mic className="h-6 w-6 text-accent" />
-          </div>
+        <div className="flex items-center gap-4">
+          <AIAvatar emotion="default" size="lg" />
           <div>
             <h1 className="text-2xl font-bold font-heading text-foreground">AI Interview Simulator</h1>
             <p className="text-muted-foreground">Practice with AI-powered interview questions and get instant feedback</p>
@@ -225,9 +223,7 @@ export default function InterviewSimulator() {
             {/* Question Card */}
             <div className="p-6 rounded-2xl bg-card/80 backdrop-blur-sm border border-border/50">
               <div className="flex items-start gap-4">
-                <div className="p-2 rounded-lg bg-primary/20 border border-primary/30">
-                  <MessageSquare className="h-5 w-5 text-primary" />
-                </div>
+                <AIAvatar emotion="talking" size="md" />
                 <div className="flex-1 space-y-3">
                   <div className="flex items-center gap-2">
                     <span className={`px-2 py-0.5 rounded text-xs font-medium ${
@@ -274,10 +270,7 @@ export default function InterviewSimulator() {
                       Analyzing...
                     </>
                   ) : (
-                    <>
-                      <Sparkles className="mr-2 h-4 w-4" />
-                      Get AI Feedback
-                    </>
+                    'Get AI Feedback'
                   )}
                 </Button>
               </div>
@@ -334,8 +327,8 @@ export default function InterviewSimulator() {
 
             {/* Sample Answer */}
             <div className="p-5 rounded-xl bg-primary/10 border border-primary/30 space-y-3">
-              <div className="flex items-center gap-2">
-                <Sparkles className="h-5 w-5 text-primary" />
+              <div className="flex items-center gap-3">
+                <AIAvatar emotion="idea" size="sm" />
                 <h4 className="font-medium text-primary">Sample Strong Answer</h4>
               </div>
               <p className="text-sm text-foreground/80 leading-relaxed">
@@ -381,9 +374,7 @@ export default function InterviewSimulator() {
         {state === 'complete' && (
           <div className="p-6 rounded-2xl bg-card/80 backdrop-blur-sm border border-border/50 space-y-6">
             <div className="text-center space-y-4">
-              <div className="inline-flex p-4 rounded-full bg-gradient-to-br from-green-500/20 to-accent/20 border border-green-500/30">
-                <CheckCircle2 className="h-10 w-10 text-green-400" />
-              </div>
+              <AIAvatar emotion="excited" size="xl" className="mx-auto" />
               <h2 className="text-2xl font-bold font-heading text-foreground">Interview Complete!</h2>
               <p className="text-muted-foreground">Here's your performance summary</p>
             </div>

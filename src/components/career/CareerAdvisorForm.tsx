@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, Briefcase, GraduationCap, Target, Loader2 } from 'lucide-react';
+import { Briefcase, GraduationCap, Target, Loader2 } from 'lucide-react';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { NeonButton } from '@/components/ui/NeonButton';
+import { AIAvatar } from '@/components/ui/AIAvatar';
 import {
   Select,
   SelectContent,
@@ -81,9 +82,7 @@ export const CareerAdvisorForm = ({ onSubmit, isLoading }: CareerAdvisorFormProp
     >
       <GlassCard className="p-6">
         <div className="flex items-center gap-3 mb-6">
-          <div className="p-3 rounded-xl bg-gradient-to-r from-primary/20 to-secondary/20">
-            <Sparkles className="w-6 h-6 text-primary" />
-          </div>
+          <AIAvatar emotion="idea" size="lg" />
           <div>
             <h2 className="text-xl font-bold text-foreground">AI Career Path Advisor</h2>
             <p className="text-sm text-muted-foreground">
@@ -198,10 +197,7 @@ export const CareerAdvisorForm = ({ onSubmit, isLoading }: CareerAdvisorFormProp
                 Analyzing Career Path...
               </>
             ) : (
-              <>
-                <Sparkles className="w-4 h-4 mr-2" />
-                Get AI Career Advice
-              </>
+              'Get AI Career Advice'
             )}
           </NeonButton>
         </form>

@@ -2,17 +2,16 @@ import { motion } from "framer-motion";
 import { 
   BarChart3, 
   TrendingUp, 
-  PieChart, 
   Target, 
   Briefcase, 
-  GraduationCap,
-  Sparkles 
+  GraduationCap
 } from "lucide-react";
 import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { useStudentAnalytics } from "@/hooks/useStudentAnalytics";
 import { Skeleton } from "@/components/ui/skeleton";
 import { RegionalLabourSignals } from "@/components/analytics/RegionalLabourSignals";
+import { AIAvatar } from "@/components/ui/AIAvatar";
 import {
   BarChart,
   Bar,
@@ -185,9 +184,7 @@ export default function StudentAnalytics() {
           {/* Match Score Distribution */}
           <GlassCard className="p-6">
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 rounded-lg bg-green-500/20">
-                <Sparkles className="h-5 w-5 text-green-400" />
-              </div>
+              <AIAvatar emotion="excited" size="sm" />
               <div>
                 <h2 className="font-semibold">Match Score Distribution</h2>
                 <p className="text-sm text-muted-foreground">Quality of your matches</p>

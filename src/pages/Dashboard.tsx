@@ -6,7 +6,6 @@ import {
   Clock, 
   TrendingUp, 
   ChevronRight, 
-  Sparkles,
   Target,
   Users,
   Award,
@@ -18,6 +17,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
+import { AIAvatar } from '@/components/ui/AIAvatar';
 
 interface StudentProfile {
   profile_completeness: number;
@@ -83,7 +83,7 @@ export default function Dashboard() {
 
   const quickActions = [
     { label: 'Complete Profile', href: '/dashboard/profile', icon: Zap, description: 'Boost your visibility' },
-    { label: 'Build Your CV', href: '/dashboard/cv-builder', icon: Sparkles, description: 'AI-powered builder' },
+    { label: 'Build Your CV', href: '/dashboard/cv-builder', icon: FileCheck, description: 'AI-powered builder' },
     { label: 'Browse Jobs', href: '/dashboard/opportunities', icon: Briefcase, description: 'Find opportunities' },
     { label: 'Practice Interviews', href: '/dashboard/interview', icon: Award, description: 'AI mock interviews' },
   ];
@@ -191,8 +191,8 @@ export default function Dashboard() {
           {/* AI Match Suggestions */}
           <div className="lg:col-span-2 glass-card p-6">
             <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <Sparkles className="h-5 w-5 text-secondary" />
+              <div className="flex items-center gap-3">
+                <AIAvatar emotion="idea" size="sm" />
                 <h2 className="font-heading font-semibold text-foreground">AI Job Matches</h2>
               </div>
               <Link to="/dashboard/opportunities">
