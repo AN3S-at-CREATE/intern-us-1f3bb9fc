@@ -4,6 +4,7 @@ import { UniversityDashboardLayout } from "@/components/university/UniversityDas
 import { GlassCard } from "@/components/ui/GlassCard";
 import { useUniversity } from "@/hooks/useUniversity";
 import { Skeleton } from "@/components/ui/skeleton";
+import { RegionalLabourSignals } from "@/components/analytics/RegionalLabourSignals";
 import {
   BarChart,
   Bar,
@@ -266,10 +267,13 @@ export default function UniversityAnalytics() {
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-secondary">4.5/5</div>
-              <div className="text-sm text-muted-foreground">Employer Satisfaction</div>
+            <div className="text-sm text-muted-foreground">Employer Satisfaction</div>
             </div>
           </div>
         </GlassCard>
+
+        {/* Regional Labour Signals - AI-powered demand mapping */}
+        <RegionalLabourSignals />
       </div>
     </UniversityDashboardLayout>
   );
