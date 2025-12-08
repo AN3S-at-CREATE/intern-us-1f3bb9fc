@@ -37,17 +37,17 @@ export function HeroSection() {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/get-started">
-                <NeonButton size="lg" className="w-full sm:w-auto group">
+              <NeonButton size="lg" className="w-full sm:w-auto group" asChild>
+                <Link to="/get-started">
                   Get Started Free
                   <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </NeonButton>
-              </Link>
-              <Link to="/employers">
-                <NeonButton variant="ghost" size="lg" className="w-full sm:w-auto">
+                </Link>
+              </NeonButton>
+              <NeonButton variant="ghost" size="lg" className="w-full sm:w-auto" asChild>
+                <Link to="/employers">
                   I'm an Employer
-                </NeonButton>
-              </Link>
+                </Link>
+              </NeonButton>
             </div>
 
             {/* Stats */}

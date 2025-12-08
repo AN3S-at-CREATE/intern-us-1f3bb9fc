@@ -32,16 +32,16 @@ export function Navbar() {
 
           {/* Desktop Auth Buttons */}
           <div className="hidden md:flex items-center gap-4">
-            <Link to="/signin">
-              <NeonButton variant="ghost" size="sm">
+            <NeonButton variant="ghost" size="sm" asChild>
+              <Link to="/signin">
                 Sign In
-              </NeonButton>
-            </Link>
-            <Link to="/get-started">
-              <NeonButton size="sm">
+              </Link>
+            </NeonButton>
+            <NeonButton size="sm" asChild>
+              <Link to="/get-started">
                 Get Started
-              </NeonButton>
-            </Link>
+              </Link>
+            </NeonButton>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -84,16 +84,16 @@ export function Navbar() {
               Partners
             </Link>
             <div className="flex flex-col gap-3 pt-4 border-t border-border">
-              <Link to="/signin" onClick={() => setIsOpen(false)}>
-                <NeonButton variant="ghost" className="w-full">
+              <NeonButton variant="ghost" className="w-full" asChild>
+                <Link to="/signin" onClick={() => setIsOpen(false)}>
                   Sign In
-                </NeonButton>
-              </Link>
-              <Link to="/get-started" onClick={() => setIsOpen(false)}>
-                <NeonButton className="w-full">
+                </Link>
+              </NeonButton>
+              <NeonButton className="w-full" asChild>
+                <Link to="/get-started" onClick={() => setIsOpen(false)}>
                   Get Started
-                </NeonButton>
-              </Link>
+                </Link>
+              </NeonButton>
             </div>
           </div>
         </div>
