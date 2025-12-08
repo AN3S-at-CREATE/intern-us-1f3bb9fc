@@ -32,17 +32,17 @@ export function CTASection() {
 
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/get-started">
-              <NeonButton size="lg" className="w-full sm:w-auto group">
+            <NeonButton size="lg" className="w-full sm:w-auto group" asChild>
+              <Link to="/get-started">
                 Create Free Account
                 <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </NeonButton>
-            </Link>
-            <Link to="/demo">
-              <NeonButton variant="ghost" size="lg" className="w-full sm:w-auto">
+              </Link>
+            </NeonButton>
+            <NeonButton variant="ghost" size="lg" className="w-full sm:w-auto" asChild>
+              <Link to="/demo">
                 Watch Demo
-              </NeonButton>
-            </Link>
+              </Link>
+            </NeonButton>
           </div>
 
           {/* Trust badges */}

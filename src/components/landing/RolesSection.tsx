@@ -86,15 +86,16 @@ export function RolesSection() {
               </ul>
 
               {/* CTA */}
-              <Link to={role.href}>
-                <NeonButton 
-                  variant={role.glow === "cyan" ? "default" : "ghost"} 
-                  className="w-full group/btn"
-                >
+              <NeonButton 
+                variant={role.glow === "cyan" ? "default" : "ghost"} 
+                className="w-full group/btn"
+                asChild
+              >
+                <Link to={role.href}>
                   Get Started
                   <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
-                </NeonButton>
-              </Link>
+                </Link>
+              </NeonButton>
             </GlassCard>
           ))}
         </div>
