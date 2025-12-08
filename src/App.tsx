@@ -6,11 +6,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { DataSaverProvider } from "@/contexts/DataSaverContext";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+import { InstallPrompt } from "@/components/pwa/InstallPrompt";
+import { OfflineBanner } from "@/components/pwa/OfflineBanner";
 
 // Public pages
 import Index from "./pages/Index";
 import GetStarted from "./pages/GetStarted";
 import NotFound from "./pages/NotFound";
+import Install from "./pages/Install";
 
 // Auth pages
 import SignUpPage from "./pages/auth/SignUpPage";
@@ -54,12 +57,15 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
+        <OfflineBanner />
         <BrowserRouter>
           <AuthProvider>
+          <InstallPrompt />
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<Index />} />
             <Route path="/get-started" element={<GetStarted />} />
+            <Route path="/install" element={<Install />} />
             
             {/* Auth Routes */}
             <Route path="/auth/signup" element={<SignUpPage />} />
