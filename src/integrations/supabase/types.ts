@@ -67,6 +67,45 @@ export type Database = {
           },
         ]
       }
+      data_access_requests: {
+        Row: {
+          created_at: string
+          id: string
+          notes: string | null
+          processed_at: string | null
+          processed_by: string | null
+          reason: string | null
+          request_type: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          processed_at?: string | null
+          processed_by?: string | null
+          reason?: string | null
+          request_type: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          processed_at?: string | null
+          processed_by?: string | null
+          reason?: string | null
+          request_type?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       education: {
         Row: {
           created_at: string
@@ -516,6 +555,96 @@ export type Database = {
         }
         Relationships: []
       }
+      notification_preferences: {
+        Row: {
+          application_updates: boolean
+          community_activity: boolean
+          created_at: string
+          email_enabled: boolean
+          id: string
+          in_app_enabled: boolean
+          interview_reminders: boolean
+          marketing_updates: boolean
+          opportunity_matches: boolean
+          updated_at: string
+          user_id: string
+          whatsapp_enabled: boolean
+          whatsapp_number: string | null
+        }
+        Insert: {
+          application_updates?: boolean
+          community_activity?: boolean
+          created_at?: string
+          email_enabled?: boolean
+          id?: string
+          in_app_enabled?: boolean
+          interview_reminders?: boolean
+          marketing_updates?: boolean
+          opportunity_matches?: boolean
+          updated_at?: string
+          user_id: string
+          whatsapp_enabled?: boolean
+          whatsapp_number?: string | null
+        }
+        Update: {
+          application_updates?: boolean
+          community_activity?: boolean
+          created_at?: string
+          email_enabled?: boolean
+          id?: string
+          in_app_enabled?: boolean
+          interview_reminders?: boolean
+          marketing_updates?: boolean
+          opportunity_matches?: boolean
+          updated_at?: string
+          user_id?: string
+          whatsapp_enabled?: boolean
+          whatsapp_number?: string | null
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          action_url: string | null
+          channel: string
+          created_at: string
+          id: string
+          is_read: boolean
+          message: string
+          metadata: Json | null
+          read_at: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          action_url?: string | null
+          channel?: string
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          message: string
+          metadata?: Json | null
+          read_at?: string | null
+          title: string
+          type?: string
+          user_id: string
+        }
+        Update: {
+          action_url?: string | null
+          channel?: string
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          message?: string
+          metadata?: Json | null
+          read_at?: string | null
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       opportunities: {
         Row: {
           application_deadline: string | null
@@ -597,6 +726,45 @@ export type Database = {
           title?: string
           updated_at?: string
           views_count?: number
+        }
+        Relationships: []
+      }
+      popia_consents: {
+        Row: {
+          consent_type: string
+          created_at: string
+          granted_at: string | null
+          id: string
+          ip_address: string | null
+          is_granted: boolean
+          revoked_at: string | null
+          updated_at: string
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          consent_type: string
+          created_at?: string
+          granted_at?: string | null
+          id?: string
+          ip_address?: string | null
+          is_granted?: boolean
+          revoked_at?: string | null
+          updated_at?: string
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          consent_type?: string
+          created_at?: string
+          granted_at?: string | null
+          id?: string
+          ip_address?: string | null
+          is_granted?: boolean
+          revoked_at?: string | null
+          updated_at?: string
+          user_agent?: string | null
+          user_id?: string
         }
         Relationships: []
       }
