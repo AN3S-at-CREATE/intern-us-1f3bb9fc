@@ -14,3 +14,6 @@ verify_jwt = false
 
 [functions.ai-career-advisor]
 verify_jwt = false
+
+[functions.ai-job-description]
+verify_jwt = false
