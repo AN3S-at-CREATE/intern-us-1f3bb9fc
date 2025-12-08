@@ -8,6 +8,7 @@ import { DataSaverProvider } from "@/contexts/DataSaverContext";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { InstallPrompt } from "@/components/pwa/InstallPrompt";
 import { OfflineBanner } from "@/components/pwa/OfflineBanner";
+import { ScrollToTop } from "@/components/layout/ScrollToTop";
 
 // Public pages
 import Index from "./pages/Index";
@@ -62,6 +63,7 @@ const App = () => (
         <OfflineBanner />
         <BrowserRouter>
           <AuthProvider>
+          <ScrollToTop />
           <InstallPrompt />
           <Routes>
             {/* Public Routes */}
