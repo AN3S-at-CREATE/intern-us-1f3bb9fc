@@ -32,6 +32,8 @@ interface Opportunity {
   applications_count: number;
   created_at: string;
   application_deadline: string | null;
+  ai_generated?: boolean;
+  ai_review_status?: 'pending' | 'flagged' | 'approved';
 }
 
 interface OpportunityListProps {
@@ -100,6 +102,16 @@ export function OpportunityList({ opportunities, onToggleActive, onEdit }: Oppor
                   {opp.opportunity_type === 'wil' ? 'WIL' : opp.opportunity_type.charAt(0).toUpperCase() + opp.opportunity_type.slice(1)}
                 </Badge>
                 <Badge variant="outline" className="border-border/50">{opp.industry}</Badge>
+                {opp.ai_generated && (
+                  <Badge className="bg-warning/20 text-warning border-warning/30">AI draft</Badge>
+                )}
+                {opp.ai_review_status === 'approved' ? (
+                  <Badge className="bg-success/20 text-success border-success/30">Reviewed</Badge>
+                ) : opp.ai_review_status === 'flagged' ? (
+                  <Badge className="bg-destructive/20 text-destructive border-destructive/30">Needs compliance fix</Badge>
+                ) : opp.ai_review_status === 'pending' ? (
+                  <Badge className="bg-warning/20 text-warning border-warning/30">Pending review</Badge>
+                ) : null}
               </div>
 
               <h3 className="text-lg font-semibold text-foreground mb-1">{opp.title}</h3>
