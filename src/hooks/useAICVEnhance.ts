@@ -8,6 +8,7 @@ interface EnhanceContext {
   targetRole?: string;
   skills?: string[];
   industry?: string;
+  biasTier?: string;
 }
 
 interface ATSResult {
@@ -23,6 +24,31 @@ interface SkillsGapResult {
   certifications: string[];
 }
 
+interface EnhanceOptions {
+  institutionsToRedact?: string[];
+  replacementLabel?: string;
+}
+
+const FAIRNESS_GUIDELINES = [
+  'Apply neutral weighting to education regardless of institution prestige.',
+  'Redact institution names prior to scoring or generating recommendations.',
+  'Avoid assumptions tied to school rankings, geography, or perceived elite status.',
+  'Flag outputs for human review before they are stored or actioned.',
+].join(' ');
+
+export function replaceInstitutions(
+  content: string,
+  institutions: string[],
+  replacementLabel = '[institution redacted]'
+) {
+  return institutions.reduce((acc, institution) => {
+    if (!institution?.trim()) return acc;
+    const escaped = institution.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(escaped, 'gi');
+    return acc.replace(regex, replacementLabel);
+  }, content);
+}
+
 export function useAICVEnhance() {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
@@ -30,7 +56,8 @@ export function useAICVEnhance() {
   const enhance = async (
     type: EnhanceType,
     content: string,
-    context?: EnhanceContext
+    context?: EnhanceContext,
+    options?: EnhanceOptions
   ): Promise<string | ATSResult | SkillsGapResult | null> => {
     if (!content.trim()) {
       toast({
@@ -43,8 +70,28 @@ export function useAICVEnhance() {
 
     setLoading(true);
     try {
+      const sanitizedContent =
+        type === 'ats_score' && options?.institutionsToRedact?.length
+          ? replaceInstitutions(
+              content,
+              options.institutionsToRedact,
+              options.replacementLabel
+            )
+          : content;
+
       const { data, error } = await supabase.functions.invoke('ai-cv-enhance', {
-        body: { type, content, context },
+        body: {
+          type,
+          content: sanitizedContent,
+          context: { ...context, fairnessGuidelines: FAIRNESS_GUIDELINES },
+          metadata: {
+            redactions: {
+              institutions: Boolean(options?.institutionsToRedact?.length),
+              replacementLabel: options?.replacementLabel,
+            },
+            requiresHumanReview: true,
+          },
+        },
       });
 
       if (error) throw error;
