@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { runPolicyChecks } from '@/lib/policyChecks';
 import {
   ChevronLeft,
   ChevronRight,
@@ -19,13 +20,27 @@ import {
   Loader2,
   Wand2,
   Check,
-  X
+  X,
+  ShieldCheck,
+  ShieldAlert,
+  Info
 } from 'lucide-react';
 import { AIAvatar } from '@/components/ui/AIAvatar';
 
 interface PostOpportunityWizardProps {
   onComplete: (data: any) => void;
   onCancel: () => void;
+}
+
+type ReviewStatus = 'pending' | 'flagged' | 'approved';
+
+interface ReviewItem {
+  id: string;
+  content: string;
+  status: ReviewStatus;
+  source: 'ai';
+  issues: string[];
+  eeStatus: 'pass' | 'warn';
 }
 
 const steps = [
@@ -66,6 +81,9 @@ export function PostOpportunityWizard({ onComplete, onCancel }: PostOpportunityW
   const [currentStep, setCurrentStep] = useState(1);
   const [isGeneratingAI, setIsGeneratingAI] = useState(false);
   const { toast } = useToast();
+  const [reviewQueue, setReviewQueue] = useState<ReviewItem[]>([]);
+  const [policyChecksRun, setPolicyChecksRun] = useState(false);
+  const [employerConfirmed, setEmployerConfirmed] = useState(false);
 
   const [formData, setFormData] = useState({
     // Step 1: Basic Info
@@ -97,6 +115,12 @@ export function PostOpportunityWizard({ onComplete, onCancel }: PostOpportunityW
   });
 
   const [aiNotes, setAiNotes] = useState('');
+
+  const combinedText = useMemo(() => (
+    [formData.description, formData.responsibilities, formData.requirements]
+      .filter(Boolean)
+      .join('\n')
+  ), [formData.description, formData.requirements, formData.responsibilities]);
 
   const updateField = (field: string, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -141,6 +165,17 @@ export function PostOpportunityWizard({ onComplete, onCancel }: PostOpportunityW
         updateField('requirements', data.requirements.join('\n• '));
       }
 
+      setReviewQueue([{
+        id: `ai-${Date.now()}`,
+        content: data.aboutRole || aiNotes,
+        status: 'pending',
+        source: 'ai',
+        issues: [],
+        eeStatus: 'pass',
+      }]);
+      setPolicyChecksRun(false);
+      setEmployerConfirmed(false);
+
       toast({ title: 'Job description generated!' });
     } catch (error) {
       console.error('AI generation error:', error);
@@ -148,6 +183,57 @@ export function PostOpportunityWizard({ onComplete, onCancel }: PostOpportunityW
     } finally {
       setIsGeneratingAI(false);
     }
+  };
+
+  const runAutomatedChecks = () => {
+    if (reviewQueue.length === 0) {
+      toast({ title: 'Generate with AI first to enable review', variant: 'destructive' });
+      return;
+    }
+
+    const result = runPolicyChecks(combinedText || aiNotes);
+    setPolicyChecksRun(true);
+
+    setReviewQueue(queue => queue.map(item => ({
+      ...item,
+      issues: [...result.disallowedHits, ...result.eeConcerns],
+      status: result.status === 'flagged' ? 'flagged' : 'pending',
+      eeStatus: result.eeConcerns.length > 0 ? 'warn' : 'pass',
+    })));
+
+    if (result.status === 'flagged') {
+      toast({
+        title: 'Policy issues found',
+        description: 'Review disallowed terms and EE concerns before publishing.',
+        variant: 'destructive',
+      });
+    } else {
+      toast({
+        title: 'Checks passed',
+        description: 'No disallowed terms detected. Awaiting employer confirmation.',
+      });
+    }
+  };
+
+  const approveReviewItem = () => {
+    if (!policyChecksRun) {
+      toast({ title: 'Run automated checks first', variant: 'destructive' });
+      return;
+    }
+
+    const flagged = reviewQueue.some(item => item.issues.length > 0);
+    if (flagged) {
+      toast({
+        title: 'Resolve policy flags',
+        description: 'Remove disallowed wording or update EE language before approving.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setReviewQueue(queue => queue.map(item => ({ ...item, status: 'approved' })));
+    setEmployerConfirmed(true);
+    toast({ title: 'Employer confirmation recorded' });
   };
 
   const handleNext = () => {
@@ -159,6 +245,27 @@ export function PostOpportunityWizard({ onComplete, onCancel }: PostOpportunityW
   };
 
   const handleSubmit = () => {
+    if (reviewQueue.length > 0) {
+      if (!policyChecksRun) {
+        toast({ title: 'Run automated policy checks before publishing', variant: 'destructive' });
+        return;
+      }
+
+      const hasFlags = reviewQueue.some(item => item.status === 'flagged');
+      if (hasFlags) {
+        toast({ title: 'Resolve policy flags first', variant: 'destructive' });
+        return;
+      }
+
+      if (!employerConfirmed) {
+        toast({ title: 'Employer confirmation required before publishing', variant: 'destructive' });
+        return;
+      }
+    }
+
+    const policyFlags = reviewQueue.flatMap(item => item.issues);
+    const eeStatus = reviewQueue.some(item => item.eeStatus === 'warn') ? 'warn' : 'pass';
+
     const opportunity = {
       ...formData,
       stipend_min: formData.stipend_min ? parseInt(formData.stipend_min) : null,
@@ -166,6 +273,12 @@ export function PostOpportunityWizard({ onComplete, onCancel }: PostOpportunityW
       duration_months: formData.duration_months ? parseInt(formData.duration_months) : null,
       start_date: formData.start_date || null,
       application_deadline: formData.application_deadline || null,
+      ai_generated: reviewQueue.length > 0,
+      ai_review_status: reviewQueue.length > 0
+        ? (employerConfirmed ? 'approved' : 'pending')
+        : 'approved',
+      policy_flags: policyFlags,
+      ee_status: eeStatus,
     };
     onComplete(opportunity);
   };
@@ -265,6 +378,77 @@ export function PostOpportunityWizard({ onComplete, onCancel }: PostOpportunityW
                     </Button>
                   </div>
                 </div>
+              </div>
+
+              <div className="p-4 rounded-xl bg-muted/40 border border-border/60">
+                <div className="flex items-start gap-3 mb-3">
+                  <div className="p-2 rounded-lg bg-primary/10 text-primary">
+                    <ShieldCheck className="h-4 w-4" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <h4 className="font-medium text-foreground">AI Review Queue</h4>
+                      {reviewQueue.length > 0 ? (
+                        <Badge className="bg-warning/20 text-warning border-warning/30">Pending review</Badge>
+                      ) : (
+                        <Badge variant="outline" className="border-border/50 text-muted-foreground">Waiting for AI draft</Badge>
+                      )}
+                    </div>
+                    <p className="text-sm text-muted-foreground">All AI-generated text stays in review until policy checks and employer confirmation are complete.</p>
+                  </div>
+                </div>
+
+                {reviewQueue.length === 0 ? (
+                  <p className="text-sm text-muted-foreground">Generate a description to populate the review queue.</p>
+                ) : (
+                  <div className="space-y-3">
+                    {reviewQueue.map(item => (
+                      <div key={item.id} className="p-3 rounded-lg bg-card/70 border border-border/60">
+                        <div className="flex items-start justify-between gap-2 mb-2">
+                          <div className="space-y-1">
+                            <div className="flex items-center gap-2">
+                              <Badge variant="outline" className="border-primary/40 text-primary">AI-generated</Badge>
+                              <Badge className={item.status === 'approved'
+                                ? 'bg-success/20 text-success border-success/30'
+                                : item.status === 'flagged'
+                                  ? 'bg-destructive/20 text-destructive border-destructive/30'
+                                  : 'bg-warning/20 text-warning border-warning/30'
+                              }>
+                                {item.status === 'approved' ? 'Reviewed' : item.status === 'flagged' ? 'Policy flagged' : 'Pending review'}
+                              </Badge>
+                              {item.eeStatus === 'warn' && (
+                                <Badge variant="outline" className="border-warning/50 text-warning">EE check needed</Badge>
+                              )}
+                            </div>
+                            <p className="text-sm text-muted-foreground line-clamp-3">{item.content}</p>
+                          </div>
+                          <Info className="h-4 w-4 text-muted-foreground" />
+                        </div>
+                        {item.issues.length > 0 && (
+                          <div className="text-sm text-destructive space-y-1">
+                            {item.issues.map(issue => (
+                              <div key={issue} className="flex items-center gap-2">
+                                <ShieldAlert className="h-4 w-4" />
+                                <span>{issue}</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+
+                    <div className="flex flex-wrap gap-2">
+                      <Button variant="outline" onClick={runAutomatedChecks} className="border-border/60">
+                        <ShieldCheck className="h-4 w-4 mr-2" />
+                        Run policy + EE checks
+                      </Button>
+                      <Button variant="outline" onClick={approveReviewItem} className="border-primary/60 text-primary">
+                        <Check className="h-4 w-4 mr-2" />
+                        Confirm employer review
+                      </Button>
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div className="grid gap-4">
