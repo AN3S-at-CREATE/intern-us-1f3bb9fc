@@ -1,13 +1,18 @@
 import { motion } from "framer-motion";
-import { AlertTriangle, Clock, TrendingDown, Phone, Mail, MessageSquare } from "lucide-react";
+import { AlertTriangle, Mail, MessageSquare, ShieldQuestion, Sparkles } from "lucide-react";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import type { WILPlacement } from "@/hooks/useUniversity";
+import type { RiskDecision } from "@/lib/riskEngine";
+
+interface EvaluatedPlacement extends WILPlacement {
+  riskDecision: RiskDecision;
+}
 
 interface AtRiskStudentsListProps {
-  placements: WILPlacement[];
+  placements: EvaluatedPlacement[];
   onContactStudent?: (placement: WILPlacement) => void;
   onCreateIntervention?: (placement: WILPlacement) => void;
 }
@@ -26,19 +31,15 @@ export function AtRiskStudentsList({
   onContactStudent,
   onCreateIntervention,
 }: AtRiskStudentsListProps) {
-  const atRiskPlacements = placements.filter(
-    (p) => p.risk_level === "high" || p.risk_level === "medium"
-  );
-
-  if (atRiskPlacements.length === 0) {
+  if (placements.length === 0) {
     return (
       <GlassCard className="p-8 text-center">
         <div className="inline-flex p-4 rounded-full bg-green-500/10 mb-4">
           <AlertTriangle className="h-8 w-8 text-green-400" />
         </div>
-        <h3 className="text-lg font-semibold mb-2">No At-Risk Students</h3>
+        <h3 className="text-lg font-semibold mb-2">No At-Risk Students Ready to View</h3>
         <p className="text-muted-foreground">
-          All students are progressing well with their placements
+          All flagged students either opted out, appealed, or are awaiting consent.
         </p>
       </GlassCard>
     );
@@ -46,11 +47,11 @@ export function AtRiskStudentsList({
 
   return (
     <div className="space-y-4">
-      {atRiskPlacements.map((placement, index) => {
+      {placements.map((placement, index) => {
         const progress = placement.hours_required > 0
           ? Math.round((placement.hours_completed / placement.hours_required) * 100)
           : 0;
-        const isHighRisk = placement.risk_level === "high";
+        const isHighRisk = placement.riskDecision.level === "high";
 
         return (
           <motion.div
@@ -66,8 +67,8 @@ export function AtRiskStudentsList({
             >
               <div className="flex flex-col lg:flex-row lg:items-center gap-4">
                 {/* Student Info */}
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
+                <div className="flex-1 space-y-3">
+                  <div className="flex items-center gap-3">
                     <div
                       className={`p-2 rounded-lg ${
                         isHighRisk ? "bg-red-500/20" : "bg-yellow-500/20"
@@ -79,26 +80,57 @@ export function AtRiskStudentsList({
                         }`}
                       />
                     </div>
-                    <div>
-                      <h3 className="font-semibold">
-                        {placement.student_profile?.first_name || "Student"}{" "}
-                        {placement.student_profile?.last_name ||
-                          placement.student_user_id.slice(0, 8)}
-                      </h3>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <h3 className="font-semibold">
+                          {placement.student_profile?.first_name || "Student"}{" "}
+                          {placement.student_profile?.last_name ||
+                            placement.student_user_id.slice(0, 8)}
+                        </h3>
+                        <Badge
+                          className={`ml-auto ${
+                            isHighRisk
+                              ? "bg-red-500/20 text-red-400"
+                              : "bg-yellow-500/20 text-yellow-400"
+                          }`}
+                        >
+                          {isHighRisk ? "High Risk" : "Medium Risk"}
+                        </Badge>
+                      </div>
                       <p className="text-sm text-muted-foreground">
-                        {placement.student_details?.qualification || "Qualification pending"} •{" "}
+                        {placement.student_details?.qualification || "Qualification pending"} • {" "}
                         {placement.employer_name || "Employer TBD"}
                       </p>
                     </div>
-                    <Badge
-                      className={`ml-auto ${
-                        isHighRisk
-                          ? "bg-red-500/20 text-red-400"
-                          : "bg-yellow-500/20 text-yellow-400"
-                      }`}
-                    >
-                      {isHighRisk ? "High Risk" : "Medium Risk"}
-                    </Badge>
+                  </div>
+
+                  <div className="grid sm:grid-cols-3 gap-3 text-sm">
+                    <div className="p-3 rounded-lg bg-muted/30">
+                      <p className="text-muted-foreground">Audit score</p>
+                      <p className="font-semibold">{placement.riskDecision.score} / 100</p>
+                      <p className="text-xs text-muted-foreground">{placement.riskDecision.inputs.status}</p>
+                    </div>
+                    <div className="p-3 rounded-lg bg-muted/30">
+                      <p className="text-muted-foreground">Completion</p>
+                      <div className="flex items-center gap-2">
+                        <Progress value={progress} className="flex-1 h-2" />
+                        <span>{progress}%</span>
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        {placement.hours_completed}/{placement.hours_required} hrs
+                      </p>
+                    </div>
+                    <div className="p-3 rounded-lg bg-muted/30">
+                      <p className="text-muted-foreground">Fairness bucket</p>
+                      <div className="flex flex-wrap gap-1 mt-1">
+                        <Badge variant="outline" className="text-xs">
+                          {placement.riskDecision.inputs.province}
+                        </Badge>
+                        <Badge variant="outline" className="text-xs">
+                          {placement.riskDecision.inputs.institution}
+                        </Badge>
+                      </div>
+                    </div>
                   </div>
 
                   {/* Risk Factors */}
@@ -117,17 +149,22 @@ export function AtRiskStudentsList({
                       })}
                   </div>
 
-                  {/* Progress */}
-                  <div className="flex items-center gap-3">
-                    <Progress value={progress} className="flex-1 h-2" />
-                    <span className="text-sm text-muted-foreground">
-                      {placement.hours_completed}/{placement.hours_required} hrs ({progress}%)
-                    </span>
+                  {/* Rationales */}
+                  <div className="bg-muted/30 rounded-lg p-3 text-sm space-y-2">
+                    <div className="flex items-center gap-2 font-medium">
+                      <ShieldQuestion className="h-4 w-4" />
+                      Why flagged
+                    </div>
+                    <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+                      {placement.riskDecision.rationale.map((item, i) => (
+                        <li key={i}>{item}</li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
 
                 {/* Actions */}
-                <div className="flex gap-2">
+                <div className="flex flex-col gap-2 min-w-[180px]">
                   <Button
                     variant="outline"
                     size="sm"
@@ -148,6 +185,10 @@ export function AtRiskStudentsList({
                     <MessageSquare className="h-4 w-4 mr-1" />
                     Intervene
                   </Button>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground p-2 rounded-lg bg-muted/30">
+                    <Sparkles className="h-4 w-4" />
+                    Inputs & rationale logged for governance.
+                  </div>
                 </div>
               </div>
 
