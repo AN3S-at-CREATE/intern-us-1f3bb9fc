@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -6,11 +6,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Progress } from '@/components/ui/progress';
 import { useAIInterview } from '@/hooks/useAIInterview';
 import { AIAvatar } from '@/components/ui/AIAvatar';
-import { 
-  Mic, 
-  Play, 
-  RotateCcw, 
-  ChevronRight, 
+import { useToast } from '@/hooks/use-toast';
+import {
+  Mic,
+  Play,
+  RotateCcw,
+  ChevronRight,
   ChevronLeft,
   Target,
   TrendingUp,
@@ -48,12 +49,36 @@ export default function InterviewSimulator() {
   const [answer, setAnswer] = useState('');
   const [scores, setScores] = useState<(ScoreResult | null)[]>([]);
   const [currentScore, setCurrentScore] = useState<ScoreResult | null>(null);
+  const [biasReported, setBiasReported] = useState(false);
+  const [biasReason, setBiasReason] = useState('');
 
-  const { isLoading, generateQuestions, scoreAnswer } = useAIInterview();
+  useEffect(() => {
+    const paused = localStorage.getItem('ai-interview-paused');
+    if (paused === 'true') {
+      setBiasReported(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (biasReported) {
+      localStorage.setItem('ai-interview-paused', 'true');
+    }
+  }, [biasReported]);
+
+  const { toast } = useToast();
+  const { isLoading, generateQuestions, scoreAnswer, reportBias } = useAIInterview();
 
   const handleStartInterview = async () => {
+    if (biasReported) {
+      toast({
+        title: 'AI paused for review',
+        description: 'We received a bias report. New AI prompts are paused until reviewed.',
+      });
+      return;
+    }
+
     if (!role || !industry) return;
-    
+
     const generatedQuestions = await generateQuestions(role, industry, difficulty);
     if (generatedQuestions && generatedQuestions.length > 0) {
       setQuestions(generatedQuestions);
@@ -64,8 +89,16 @@ export default function InterviewSimulator() {
   };
 
   const handleSubmitAnswer = async () => {
+    if (biasReported) {
+      toast({
+        title: 'AI paused for review',
+        description: 'We will not score answers until the bias report is resolved.',
+      });
+      return;
+    }
+
     if (!answer.trim()) return;
-    
+
     const result = await scoreAnswer(questions[currentIndex].question, answer);
     if (result) {
       setCurrentScore(result);
@@ -94,10 +127,28 @@ export default function InterviewSimulator() {
     setAnswer('');
     setScores([]);
     setCurrentScore(null);
+    setBiasReason('');
   };
 
-  const averageScore = scores.filter(s => s !== null).reduce((acc, s) => acc + (s?.score || 0), 0) / 
-    Math.max(scores.filter(s => s !== null).length, 1);
+  const handleReportBias = async () => {
+    if (!biasReason.trim()) {
+      toast({
+        title: 'Add details',
+        description: 'Please share what felt biased so we can investigate.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    const result = await reportBias(role, industry, biasReason.trim());
+    if (result?.success) {
+      setBiasReported(true);
+      setState('feedback');
+    }
+  };
+
+  const averageScore = scores.filter((s) => s !== null).reduce((acc, s) => acc + (s?.score || 0), 0) /
+    Math.max(scores.filter((s) => s !== null).length, 1);
 
   const getScoreColor = (score: number) => {
     if (score >= 8) return 'text-green-400';
@@ -116,6 +167,16 @@ export default function InterviewSimulator() {
             <p className="text-muted-foreground">Practice with AI-powered interview questions and get instant feedback</p>
           </div>
         </div>
+
+        {biasReported && (
+          <div className="flex items-center gap-3 p-4 rounded-xl bg-yellow-500/10 border border-yellow-500/40">
+            <AlertCircle className="h-5 w-5 text-yellow-500" />
+            <div className="space-y-1">
+              <p className="text-sm font-medium text-foreground">AI responses paused for review</p>
+              <p className="text-xs text-muted-foreground">We received a bias flag. We’ll hold new AI answers until the team reviews your feedback.</p>
+            </div>
+          </div>
+        )}
 
         {/* Progress Bar */}
         {state !== 'setup' && (
@@ -198,7 +259,7 @@ export default function InterviewSimulator() {
 
               <Button
                 onClick={handleStartInterview}
-                disabled={!role || !industry || isLoading}
+                disabled={!role || !industry || isLoading || biasReported}
                 className="w-full mt-4 bg-gradient-to-r from-primary to-accent hover:opacity-90"
               >
                 {isLoading ? (
@@ -261,7 +322,7 @@ export default function InterviewSimulator() {
                 </span>
                 <Button
                   onClick={handleSubmitAnswer}
-                  disabled={!answer.trim() || isLoading}
+                  disabled={!answer.trim() || isLoading || biasReported}
                   className="bg-gradient-to-r from-primary to-accent hover:opacity-90"
                 >
                   {isLoading ? (
@@ -334,6 +395,39 @@ export default function InterviewSimulator() {
               <p className="text-sm text-foreground/80 leading-relaxed">
                 {currentScore.sampleAnswer}
               </p>
+            </div>
+
+            {/* Bias Reporting */}
+            <div className="p-5 rounded-xl bg-background/60 border border-border/50 space-y-3">
+              <div className="flex items-center gap-3">
+                <MessageSquare className="h-5 w-5 text-foreground" />
+                <div>
+                  <h4 className="font-medium text-foreground">Notice bias? Pause the AI</h4>
+                  <p className="text-xs text-muted-foreground">Share what felt unfair. We’ll halt AI replies until a reviewer checks it.</p>
+                </div>
+              </div>
+              {biasReported ? (
+                <p className="text-sm text-muted-foreground">Thanks for flagging this. We’ve paused new AI feedback while we review.</p>
+              ) : (
+                <>
+                  <Textarea
+                    value={biasReason}
+                    onChange={(e) => setBiasReason(e.target.value)}
+                    placeholder="Describe what felt biased or unfair in the feedback"
+                    className="bg-background/50 border-border/50"
+                  />
+                  <div className="flex justify-end">
+                    <Button
+                      variant="outline"
+                      onClick={handleReportBias}
+                      disabled={isLoading}
+                      className="border-border/50"
+                    >
+                      Report bias & pause AI
+                    </Button>
+                  </div>
+                </>
+              )}
             </div>
 
             {/* Navigation */}
