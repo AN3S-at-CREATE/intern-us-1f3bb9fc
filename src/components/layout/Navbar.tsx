@@ -51,8 +51,8 @@ export function Navbar() {
             >
               How It Works
             </a>
-            <a 
-              href="#partners" 
+            <a
+              href="#partners"
               onClick={(e) => handleAnchorClick(e, "#partners")}
               className="neon-link text-muted-foreground hover:text-foreground transition-colors font-ui cursor-pointer"
             >
