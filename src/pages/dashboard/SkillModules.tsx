@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { useSkillModules } from '@/hooks/useSkillModules';
+import { useSkillModules, type Module, type SkillGapAnalysis, type Lesson } from '@/hooks/useSkillModules';
 import { 
   BookOpen, 
   Clock, 
@@ -53,10 +53,10 @@ export default function SkillModules() {
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [selectedModule, setSelectedModule] = useState<any>(null);
+  const [selectedModule, setSelectedModule] = useState<Module | null>(null);
   const [showSkillGap, setShowSkillGap] = useState(false);
   const [targetRole, setTargetRole] = useState('');
-  const [skillGapAnalysis, setSkillGapAnalysis] = useState<any>(null);
+  const [skillGapAnalysis, setSkillGapAnalysis] = useState<SkillGapAnalysis | null>(null);
 
   const categories = ['all', ...new Set(modules.map(m => m.category))];
 
@@ -70,7 +70,7 @@ export default function SkillModules() {
     return matchesSearch && matchesCategory;
   });
 
-  const handleStartModule = async (module: any) => {
+  const handleStartModule = async (module: Module) => {
     await startModule.mutateAsync(module.id);
     setSelectedModule(module);
   };
@@ -304,7 +304,7 @@ export default function SkillModules() {
                 <div>
                   <h4 className="text-sm font-medium mb-2">Lessons</h4>
                   <div className="space-y-2">
-                    {selectedModule.content.lessons.map((lesson: any, idx: number) => (
+                    {selectedModule.content.lessons.map((lesson: Lesson, idx: number) => (
                       <GlassCard key={idx} className="p-3">
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-sm">
@@ -451,14 +451,14 @@ export default function SkillModules() {
                     )}
 
                     {/* Skill Gaps */}
-                    {skillGapAnalysis.skillGaps?.length > 0 && (
+                    {skillGapAnalysis?.skillGaps?.length > 0 && (
                       <div>
                         <h4 className="text-sm font-medium mb-3 flex items-center gap-2">
                           <Target className="w-4 h-4 text-accent-magenta" />
                           Skills to Develop
                         </h4>
                         <div className="space-y-3">
-                          {skillGapAnalysis.skillGaps.map((gap: any, idx: number) => (
+                          {skillGapAnalysis.skillGaps.map((gap, idx) => (
                             <GlassCard key={idx} className="p-4">
                               <div className="flex items-start justify-between mb-2">
                                 <div>
@@ -483,14 +483,14 @@ export default function SkillModules() {
                     )}
 
                     {/* Recommended Modules */}
-                    {skillGapAnalysis.recommendedModules?.length > 0 && (
+                    {skillGapAnalysis?.recommendedModules?.length > 0 && (
                       <div>
                         <h4 className="text-sm font-medium mb-3 flex items-center gap-2">
                           <BookOpen className="w-4 h-4 text-primary" />
                           Recommended Modules
                         </h4>
                         <div className="space-y-2">
-                          {skillGapAnalysis.recommendedModules.map((rec: any, idx: number) => (
+                          {skillGapAnalysis.recommendedModules.map((rec, idx) => (
                             <GlassCard key={idx} className="p-3 flex items-center justify-between">
                               <div>
                                 <p className="font-medium text-sm">{rec.title}</p>

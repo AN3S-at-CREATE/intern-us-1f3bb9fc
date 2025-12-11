@@ -83,11 +83,13 @@ export default function AtRiskStudents() {
     [fairnessByInstitution]
   );
 
-  const handleContactStudent = (placement: any) => {
+  type PlacementRecord = { student_profile?: { first_name?: string } };
+
+  const handleContactStudent = (placement: PlacementRecord) => {
     toast.info(`Opening email for ${placement.student_profile?.first_name || "student"}...`);
   };
 
-  const handleCreateIntervention = (placement: any) => {
+  const handleCreateIntervention = (placement: PlacementRecord) => {
     toast.info("Intervention tracking feature coming soon");
   };
 

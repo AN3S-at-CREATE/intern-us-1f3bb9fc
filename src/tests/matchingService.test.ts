@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { buildMatchRequestPayload, normalizeLanguages, normalizeProvince, stripPII } from '@/lib/matchingService';
 
-const sampleProfile = {
+const sampleProfile: Parameters<typeof buildMatchRequestPayload>[0] = {
   user_id: 'user-1',
   field_of_study: 'Computer Science',
   qualification: 'BSc',
@@ -27,7 +27,7 @@ describe('matchingService', () => {
   });
 
   it('builds payload with bias assessment metadata', () => {
-    const payload = buildMatchRequestPayload(sampleProfile as any, {
+    const payload = buildMatchRequestPayload(sampleProfile, {
       id: 'opp-1',
       employer_id: 'emp',
       title: 'Intern',

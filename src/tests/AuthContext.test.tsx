@@ -30,8 +30,11 @@ vi.mock('@/integrations/supabase/client', () => ({
 
 // We need to retrieve the mock to spy on it in tests
 import { supabase } from '@/integrations/supabase/client';
-// Cast to any for easy mocking access
-const mockSupabaseClient = supabase as any;
+// Cast to a loosely typed mock object for easy mocking access
+const mockSupabaseClient = supabase as unknown as {
+  auth: { getSession: vi.Mock; onAuthStateChange: vi.Mock };
+  from: vi.Mock;
+};
 
 const TestComponent = () => {
   const { loading, user, profile } = useAuth();
@@ -56,7 +59,7 @@ describe('AuthContext', () => {
     mockSupabaseClient.auth.onAuthStateChange.mockReturnValue({ data: { subscription: { unsubscribe: vi.fn() } } });
 
     // mock fetchProfile with delay
-    let resolveProfile: any;
+    let resolveProfile: (value: unknown) => void;
     const profilePromise = new Promise(resolve => { resolveProfile = resolve; });
 
     mockSupabaseClient.from.mockReturnValue({

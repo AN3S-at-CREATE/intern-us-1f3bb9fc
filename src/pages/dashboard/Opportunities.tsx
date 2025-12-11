@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { useOpportunities } from '@/hooks/useOpportunities';
+import type { Database } from '@/integrations/supabase/types';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -68,9 +69,11 @@ export default function Opportunities() {
 
   useEffect(() => {
     fetchOpportunities({ search, industry, location, opportunityType, locationType });
-  }, [search, industry, location, opportunityType, locationType]);
+  }, [fetchOpportunities, search, industry, location, opportunityType, locationType]);
 
-  const getMatchScore = async (opportunityId: string, opportunity: any) => {
+  type OpportunityRow = Database['public']['Tables']['opportunities']['Row'];
+
+  const getMatchScore = async (opportunityId: string, opportunity: OpportunityRow) => {
     if (matchScores[opportunityId] || loadingScores.has(opportunityId)) return;
     
     setLoadingScores(prev => new Set(prev).add(opportunityId));
@@ -123,8 +126,9 @@ export default function Opportunities() {
       
       toast({ title: 'Application submitted successfully!' });
       fetchOpportunities({ search, industry, location, opportunityType, locationType });
-    } catch (error: any) {
-      toast({ title: 'Failed to apply', description: error.message, variant: 'destructive' });
+    } catch (error: unknown) {
+      const description = error instanceof Error ? error.message : 'Unable to submit application';
+      toast({ title: 'Failed to apply', description, variant: 'destructive' });
     }
   };
 

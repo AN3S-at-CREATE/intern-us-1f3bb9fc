@@ -32,8 +32,10 @@ vi.mock('@/integrations/supabase/client', () => ({
 
 // We need to retrieve the mock to spy on it in tests
 import { supabase } from '@/integrations/supabase/client';
-// Cast to any for easy mocking access
-const mockSupabaseClient = supabase as any;
+// Cast to a loosely typed mock object for easy mocking access
+const mockSupabaseClient = supabase as unknown as {
+  auth: { getSession: vi.Mock; onAuthStateChange: vi.Mock };
+};
 
 describe('ProtectedRoute', () => {
   beforeEach(() => {
