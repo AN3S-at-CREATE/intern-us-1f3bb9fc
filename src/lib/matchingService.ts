@@ -4,6 +4,7 @@ type StudentProfile = Partial<Database['public']['Tables']['student_profiles']['
   skills?: string[];
   experience?: string;
   languages?: string[];
+  language?: string | string[];
 };
 
 type Opportunity = Database['public']['Tables']['opportunities']['Row'];
@@ -135,9 +136,16 @@ export const buildMatchRequestPayload = (
   options: { blindMatchMode?: boolean }
 ): MatchRequestPayload => {
   const blindMatchEnforced = Boolean(options.blindMatchMode);
+  const languagesField = Array.isArray(studentProfile.languages)
+    ? studentProfile.languages
+    : Array.isArray(studentProfile.language)
+      ? studentProfile.language
+      : studentProfile.language
+        ? [studentProfile.language]
+        : [];
   const normalized: NormalizedDemographics = {
     province: normalizeProvince(studentProfile.location || null),
-    languages: normalizeLanguages((studentProfile as any).languages || (studentProfile as any).language),
+    languages: normalizeLanguages(languagesField),
     genderProxy: studentProfile.gender ? studentProfile.gender.toLowerCase() : null,
   };
 

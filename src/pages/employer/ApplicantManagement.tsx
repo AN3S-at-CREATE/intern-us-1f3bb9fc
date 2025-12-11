@@ -32,7 +32,7 @@ export default function ApplicantManagement() {
   const [blindMatchMode, setBlindMatchMode] = useState(false);
 
   const filteredApplications = useMemo(() => {
-    let filtered = applications.filter(app => {
+    const filtered = applications.filter(app => {
       // Search filter
       const searchLower = search.toLowerCase();
       const nameMatch = `${app.profile?.first_name || ''} ${app.profile?.last_name || ''}`.toLowerCase().includes(searchLower);

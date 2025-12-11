@@ -245,7 +245,10 @@ export default function InterviewSimulator() {
 
               <div className="space-y-2">
                 <label className="text-sm font-medium text-foreground">Difficulty Level</label>
-                <Select value={difficulty} onValueChange={(v) => setDifficulty(v as any)}>
+                <Select
+                  value={difficulty}
+                  onValueChange={(value: 'beginner' | 'intermediate' | 'advanced') => setDifficulty(value)}
+                >
                   <SelectTrigger className="bg-background/50 border-border/50">
                     <SelectValue />
                   </SelectTrigger>

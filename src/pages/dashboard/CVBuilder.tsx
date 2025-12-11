@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { 
   Save, Loader2, Sparkles, FileText, Target, BarChart3, 
   Briefcase, GraduationCap, Lightbulb, ChevronRight, Download,
@@ -74,13 +74,7 @@ export default function CVBuilder() {
   // Human review gate
   const [humanReviewed, setHumanReviewed] = useState(false);
 
-  useEffect(() => {
-    if (user) {
-      fetchData();
-    }
-  }, [user]);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     if (!user) return;
     
     try {
@@ -123,7 +117,13 @@ export default function CVBuilder() {
       setLoading(false);
       setHumanReviewed(false);
     }
-  };
+  }, [user]);
+
+  useEffect(() => {
+    if (user) {
+      fetchData();
+    }
+  }, [user, fetchData]);
 
   const markNeedsReview = () => setHumanReviewed(false);
 
@@ -243,10 +243,10 @@ ${edu.field_of_study || ''}
         title: "CV saved!",
         description: "Your changes have been saved successfully.",
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error saving",
-        description: error.message,
+        description: error instanceof Error ? error.message : "Unable to save CV",
         variant: "destructive",
       });
     } finally {
@@ -275,10 +275,10 @@ ${edu.field_of_study || ''}
         setExperiences(prev => [data, ...prev]);
         markNeedsReview();
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error adding experience",
-        description: error.message,
+        description: error instanceof Error ? error.message : "Unable to add experience",
         variant: "destructive",
       });
     }
@@ -296,10 +296,10 @@ ${edu.field_of_study || ''}
       setExperiences(prev => prev.map(exp => 
         exp.id === id ? { ...exp, ...updates } : exp
       ));
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error updating",
-        description: error.message,
+        description: error instanceof Error ? error.message : "Unable to update experience",
         variant: "destructive",
       });
     }
@@ -315,10 +315,10 @@ ${edu.field_of_study || ''}
       if (error) throw error;
       setExperiences(prev => prev.filter(exp => exp.id !== id));
       markNeedsReview();
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error deleting",
-        description: error.message,
+        description: error instanceof Error ? error.message : "Unable to delete experience",
         variant: "destructive",
       });
     }

@@ -20,12 +20,14 @@ serve(async (req) => {
     }
 
     // Build context from placements data
+    type PlacementRecord = { status?: string; risk_level?: string };
+
     const placementStats = {
       total: placements?.length || 0,
-      placed: placements?.filter((p: any) => p.status === 'placed' || p.status === 'completed').length || 0,
-      pending: placements?.filter((p: any) => p.status === 'pending').length || 0,
-      atRisk: placements?.filter((p: any) => p.risk_level === 'high' || p.risk_level === 'medium').length || 0,
-      completed: placements?.filter((p: any) => p.status === 'completed').length || 0,
+      placed: placements?.filter((p: PlacementRecord) => p.status === 'placed' || p.status === 'completed').length || 0,
+      pending: placements?.filter((p: PlacementRecord) => p.status === 'pending').length || 0,
+      atRisk: placements?.filter((p: PlacementRecord) => p.risk_level === 'high' || p.risk_level === 'medium').length || 0,
+      completed: placements?.filter((p: PlacementRecord) => p.status === 'completed').length || 0,
     };
 
     const systemPrompt = `You are an AI WIL (Work-Integrated Learning) Reporting Assistant for South African higher education institutions. You help generate professional reports for DHET (Department of Higher Education and Training) and SETA (Sector Education and Training Authority) compliance.

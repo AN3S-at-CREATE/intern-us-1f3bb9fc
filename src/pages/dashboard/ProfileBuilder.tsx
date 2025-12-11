@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Save, Loader2, Plus, X, Sparkles, User, GraduationCap, Briefcase, Award } from 'lucide-react';
 import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { useAuth } from '@/contexts/AuthContext';
@@ -80,11 +80,7 @@ export default function ProfileBuilder() {
     blind_match_enabled: true,
   });
 
-  useEffect(() => {
-    fetchData();
-  }, [user]);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     if (!user) return;
     
     try {
@@ -147,7 +143,11 @@ export default function ProfileBuilder() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [profile, user]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData, user]);
 
   const calculateCompleteness = () => {
     const fields = [
@@ -214,10 +214,10 @@ export default function ProfileBuilder() {
         title: "Profile saved!",
         description: "Your changes have been saved successfully.",
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error saving profile",
-        description: error.message,
+        description: error instanceof Error ? error.message : "Unable to save profile",
         variant: "destructive",
       });
     } finally {
@@ -246,10 +246,10 @@ export default function ProfileBuilder() {
         title: "Skill added!",
         description: "Your skill has been added to your profile.",
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error adding skill",
-        description: error.message,
+        description: error instanceof Error ? error.message : "Unable to add skill",
         variant: "destructive",
       });
     }
@@ -273,10 +273,10 @@ export default function ProfileBuilder() {
         title: "Skill removed",
         description: "The skill has been removed from your profile.",
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error removing skill",
-        description: error.message,
+        description: error instanceof Error ? error.message : "Unable to remove skill",
         variant: "destructive",
       });
     }
