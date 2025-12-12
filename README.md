@@ -46,10 +46,10 @@
 
 ## ⚖️ Compliance & Accessibility
 
-- ✅ Fully **POPIA** aligned: transparency, consent, breach notifications:contentReference[oaicite:0]{index=0}  
-- ♿ **WCAG 2.1 AA** compliant: screen readers, keyboard navigation, alt text, and contrast optimized:contentReference[oaicite:1]{index=1}  
-- 🌍 **Multilingual** support & **voice-note** applications for accessibility in rural areas:contentReference[oaicite:2]{index=2}  
-- 🔐 Secure connections, encrypted data handling, audit-ready policies:contentReference[oaicite:3]{index=3}
+- ✅ Fully **POPIA** aligned: transparency, consent, breach notifications
+- ♿ **WCAG 2.1 AA** compliant: screen readers, keyboard navigation, alt text, and contrast optimized
+- 🌍 **Multilingual** support & **voice-note** applications for accessibility in rural areas
+- 🔐 Secure connections, encrypted data handling, audit-ready policies
 
 ---
 
@@ -60,18 +60,70 @@ Intern Us is built on a blended revenue model:
 - Employer subscription tiers with B-BBEE integration tools
 - Value-add services like psychometric testing & screening APIs
 - White-label deployment for academic institutions and SETAs
-- Government partnerships & donor funding for accessibility initiatives:contentReference[oaicite:4]{index=4}
+- Government partnerships & donor funding for accessibility initiatives
 
 ---
 
 ## 🛠 Tech Stack
 
-- **Frontend**: Next.js + Tailwind CSS
-- **Backend**: Firebase / Firestore + Cloud Functions
-- **Auth**: Firebase Auth (Multi-Tenant Setup)
-- **Hosting**: Vercel / Netlify (South African edge nodes for latency)
-- **AI Matching**: Custom LLM Matching Layer (Built in Gemini/Firebase Studio)
-- **Compliance Layer**: POPIA Logger + Anonymised Data Flow Engine
+- **Frontend**: React + Vite + Tailwind CSS
+- **Backend**: Supabase (Auth, Database, Edge Functions)
+- **State Management**: React Query
+- **Testing**: Vitest
+- **AI Features**: Lovable AI (integrated via Supabase Edge Functions)
+- **Deployment**: Standard SPA (Vercel/Netlify/etc)
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (Latest LTS version recommended)
+- npm or bun
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd intern-us
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   # or
+   bun install
+   ```
+
+3. Environment Setup:
+   - Copy the example environment file:
+     ```bash
+     cp .env.example .env
+     ```
+   - Update `.env` with your Supabase credentials (`VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY`).
+   - *Note*: Supabase Edge Functions require `LOVABLE_API_KEY` to be set in your Supabase project secrets, not in the local `.env` file (unless running functions locally).
+
+### Development
+
+Start the development server:
+
+```bash
+npm run dev
+# or
+bun dev
+```
+
+### Testing
+
+Run the test suite:
+
+```bash
+npm test
+# or
+bun test
+```
 
 ---
 
@@ -87,9 +139,7 @@ Intern Us is built on a blended revenue model:
 
 ## 📎 Documentation & Reports
 
-- [Strategic Blueprint PDF](docs/Strategic_Blueprint_InternUs_2025.pdf)
-- [UX & Compliance Audit](docs/Website_Compliance_Report.pdf)
-- [Dual Perspective Analysis (Student vs. Employer)](docs/InternUS_Student_Employer_Strategy.pdf)
+> **Note**: Comprehensive documentation and strategy reports are currently being updated.
 
 ---
 
