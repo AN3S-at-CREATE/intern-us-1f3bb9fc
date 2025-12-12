@@ -4,7 +4,17 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
 
-interface Module {
+export interface Lesson {
+  title: string;
+  content: string;
+}
+
+export interface ModuleContent {
+  lessons?: Lesson[];
+  [key: string]: unknown;
+}
+
+export interface Module {
   id: string;
   title: string;
   description: string | null;
@@ -12,7 +22,7 @@ interface Module {
   difficulty: string;
   duration_minutes: number;
   skills_covered: string[] | null;
-  content: any;
+  content: ModuleContent | null;
   thumbnail_url: string | null;
 }
 
@@ -26,7 +36,7 @@ interface ModuleCompletion {
   time_spent_minutes: number | null;
 }
 
-interface SkillGapAnalysis {
+export interface SkillGapAnalysis {
   targetRole: string;
   readinessScore: number;
   summary: string;

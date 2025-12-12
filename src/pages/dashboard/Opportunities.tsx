@@ -6,9 +6,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { useOpportunities } from '@/hooks/useOpportunities';
+import type { Database } from '@/integrations/supabase/types';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { buildMatchRequestPayload } from '@/lib/matchingService';
 import { 
   Search, 
   MapPin, 
@@ -34,6 +36,19 @@ interface MatchScore {
   score: number;
   reasons: string[];
   recommendation: string;
+  biasAssessment?: {
+    risk: string;
+    flags: string[];
+  };
+  normalizedDemographics?: {
+    province: string | null;
+    languages: string[];
+    genderProxy: string | null;
+  };
+  featureLog?: {
+    notes: string[];
+    blindMatchEnforced: boolean;
+  };
 }
 
 export default function Opportunities() {
@@ -54,9 +69,11 @@ export default function Opportunities() {
 
   useEffect(() => {
     fetchOpportunities({ search, industry, location, opportunityType, locationType });
-  }, [search, industry, location, opportunityType, locationType]);
+  }, [fetchOpportunities, search, industry, location, opportunityType, locationType]);
 
-  const getMatchScore = async (opportunityId: string, opportunity: any) => {
+  type OpportunityRow = Database['public']['Tables']['opportunities']['Row'];
+
+  const getMatchScore = async (opportunityId: string, opportunity: OpportunityRow) => {
     if (matchScores[opportunityId] || loadingScores.has(opportunityId)) return;
     
     setLoadingScores(prev => new Set(prev).add(opportunityId));
@@ -69,11 +86,12 @@ export default function Opportunities() {
         .eq('user_id', user?.id)
         .maybeSingle();
 
+      const matchRequest = buildMatchRequestPayload(studentProfile || {}, opportunity, { blindMatchMode });
+
+      console.info('match_features', matchRequest.featureLog);
+
       const { data, error } = await supabase.functions.invoke('ai-match-score', {
-        body: { 
-          studentProfile: studentProfile || {}, 
-          opportunity 
-        }
+        body: matchRequest,
       });
 
       if (error) throw error;
@@ -108,8 +126,9 @@ export default function Opportunities() {
       
       toast({ title: 'Application submitted successfully!' });
       fetchOpportunities({ search, industry, location, opportunityType, locationType });
-    } catch (error: any) {
-      toast({ title: 'Failed to apply', description: error.message, variant: 'destructive' });
+    } catch (error: unknown) {
+      const description = error instanceof Error ? error.message : 'Unable to submit application';
+      toast({ title: 'Failed to apply', description, variant: 'destructive' });
     }
   };
 
@@ -127,6 +146,17 @@ export default function Opportunities() {
     if (score >= 80) return 'text-green-400';
     if (score >= 60) return 'text-yellow-400';
     return 'text-orange-400';
+  };
+
+  const getBiasColor = (risk: string) => {
+    switch (risk) {
+      case 'low':
+        return 'text-green-400';
+      case 'medium':
+        return 'text-yellow-400';
+      default:
+        return 'text-orange-400';
+    }
   };
 
   const formatStipend = (min?: number | null, max?: number | null) => {
@@ -420,6 +450,29 @@ export default function Opportunities() {
                               <p className="text-sm text-muted-foreground italic">
                                 {matchScore.recommendation}
                               </p>
+                              {(matchScore.biasAssessment || matchScore.featureLog) && (
+                                <div className="flex flex-col gap-1 text-xs text-muted-foreground">
+                                  {matchScore.biasAssessment && (
+                                    <div className="flex items-center gap-2">
+                                      <span>Bias check:</span>
+                                      <span className={`font-semibold ${getBiasColor(matchScore.biasAssessment.risk)}`}>
+                                        {matchScore.biasAssessment.risk}
+                                      </span>
+                                      {matchScore.biasAssessment.flags.length > 0 && (
+                                        <span className="italic">({matchScore.biasAssessment.flags.join(', ')})</span>
+                                      )}
+                                    </div>
+                                  )}
+                                  {matchScore.featureLog && (
+                                    <div className="flex items-center gap-2">
+                                      <span>Blind match enforced:</span>
+                                      <Badge variant={matchScore.featureLog.blindMatchEnforced ? 'secondary' : 'outline'}>
+                                        {matchScore.featureLog.blindMatchEnforced ? 'On' : 'Off'}
+                                      </Badge>
+                                    </div>
+                                  )}
+                                </div>
+                              )}
                             </div>
                           )}
                         </div>

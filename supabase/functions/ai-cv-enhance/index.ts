@@ -140,7 +140,7 @@ serve(async (req) => {
     }
 
     // Parse JSON responses for specific types
-    let result: any = { enhanced: enhancedContent };
+    let result: Record<string, unknown> = { enhanced: enhancedContent };
 
     if (type === "skills_gap" || type === "ats_score") {
       try {

@@ -35,6 +35,10 @@ interface Opportunity {
   applications_count: number;
   created_at: string;
   application_deadline: string | null;
+  ai_generated?: boolean;
+  ai_review_status?: 'pending' | 'flagged' | 'approved';
+  policy_flags?: string[];
+  ee_status?: 'pass' | 'warn';
 }
 
 interface Application {
@@ -158,7 +162,15 @@ export function useEmployer() {
       return;
     }
 
-    setOpportunities(data || []);
+    const enriched = (data || []).map(item => ({
+      ...item,
+      ai_generated: item.ai_generated ?? false,
+      ai_review_status: item.ai_review_status ?? 'approved',
+      policy_flags: item.policy_flags ?? [],
+      ee_status: item.ee_status ?? 'pass',
+    }));
+
+    setOpportunities(enriched);
     
     // Calculate stats
     const active = data?.filter(o => o.is_active) || [];
@@ -216,6 +228,13 @@ export function useEmployer() {
   const createOpportunity = async (opportunity: Record<string, any>) => {
     if (!user) return;
 
+    const reviewMeta = {
+      ai_generated: opportunity.ai_generated ?? false,
+      ai_review_status: opportunity.ai_review_status ?? 'approved',
+      policy_flags: opportunity.policy_flags ?? [],
+      ee_status: opportunity.ee_status ?? 'pass',
+    };
+
     const { data, error } = await supabase
       .from('opportunities')
       .insert({
@@ -248,8 +267,10 @@ export function useEmployer() {
     }
 
     toast({ title: 'Opportunity posted successfully!' });
-    await fetchOpportunities();
-    return data;
+    if (data) {
+      setOpportunities(prev => [{ ...data, ...reviewMeta }, ...prev]);
+    }
+    return data ? { ...data, ...reviewMeta } : null;
   };
 
   const updateOpportunity = async (id: string, updates: Partial<Opportunity>) => {

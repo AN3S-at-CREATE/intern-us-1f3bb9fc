@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -37,7 +37,7 @@ export function useOpportunities() {
   const [appliedIds, setAppliedIds] = useState<Set<string>>(new Set());
   const { user } = useAuth();
 
-  const fetchOpportunities = async (filters: Filters) => {
+  const fetchOpportunities = useCallback(async (filters: Filters) => {
     setIsLoading(true);
     try {
       let query = supabase
@@ -71,9 +71,9 @@ export function useOpportunities() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
-  const fetchUserData = async () => {
+  const fetchUserData = useCallback(async () => {
     if (!user) return;
     
     try {
@@ -91,7 +91,7 @@ export function useOpportunities() {
     } catch (error) {
       console.error('Error fetching user data:', error);
     }
-  };
+  }, [user]);
 
   const toggleSave = async (opportunityId: string) => {
     if (!user) return;

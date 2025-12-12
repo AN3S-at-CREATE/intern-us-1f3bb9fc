@@ -8,7 +8,7 @@ export default function PostOpportunity() {
   const navigate = useNavigate();
   const { createOpportunity } = useEmployer();
 
-  const handleComplete = async (data: any) => {
+  const handleComplete = async (data: Record<string, unknown>) => {
     const result = await createOpportunity(data);
     if (result) {
       navigate('/employer/opportunities');

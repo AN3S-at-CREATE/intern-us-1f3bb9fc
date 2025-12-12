@@ -67,7 +67,7 @@ export default function CompanyProfile() {
     }
   }, [employerProfile]);
 
-  const updateField = (field: string, value: any) => {
+  const updateField = (field: string, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 

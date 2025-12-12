@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { 
   Save, Loader2, Sparkles, FileText, Target, BarChart3, 
   Briefcase, GraduationCap, Lightbulb, ChevronRight, Download,
@@ -8,6 +8,7 @@ import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -68,14 +69,12 @@ export default function CVBuilder() {
   // ATS Analysis
   const [atsResult, setAtsResult] = useState<ATSResult | null>(null);
   const [atsLoading, setAtsLoading] = useState(false);
+  const [biasWarnings, setBiasWarnings] = useState<string[]>([]);
 
-  useEffect(() => {
-    if (user) {
-      fetchData();
-    }
-  }, [user]);
+  // Human review gate
+  const [humanReviewed, setHumanReviewed] = useState(false);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     if (!user) return;
     
     try {
@@ -116,11 +115,21 @@ export default function CVBuilder() {
       console.error('Error fetching CV data:', error);
     } finally {
       setLoading(false);
+      setHumanReviewed(false);
     }
-  };
+  }, [user]);
+
+  useEffect(() => {
+    if (user) {
+      fetchData();
+    }
+  }, [user, fetchData]);
+
+  const markNeedsReview = () => setHumanReviewed(false);
 
   const handleEnhance = async (type: EnhanceType, content: string, id?: string) => {
     setActiveEnhance(id || type);
+    markNeedsReview();
     const result = await enhance(type, content, { targetRole });
     setActiveEnhance(null);
     
@@ -139,7 +148,8 @@ export default function CVBuilder() {
 
   const handleATSAnalysis = async () => {
     setAtsLoading(true);
-    
+    setBiasWarnings([]);
+
     // Compile full CV content
     const cvContent = `
 Headline: ${headline}
@@ -161,16 +171,64 @@ ${edu.field_of_study || ''}
 `).join('\n')}
     `.trim();
 
-    const result = await enhance('ats_score', cvContent, { targetRole });
+    const institutions = education
+      .map(edu => edu.institution_name)
+      .filter((name): name is string => Boolean(name));
+
+    const [result, tierOneResult, tierThreeResult] = await Promise.all([
+      enhance('ats_score', cvContent, { targetRole }, { institutionsToRedact: institutions }),
+      enhance(
+        'ats_score',
+        cvContent,
+        { targetRole, biasTier: 'tier_one' },
+        { institutionsToRedact: institutions, replacementLabel: 'Tier 1 Institution' }
+      ),
+      enhance(
+        'ats_score',
+        cvContent,
+        { targetRole, biasTier: 'tier_three' },
+        { institutionsToRedact: institutions, replacementLabel: 'Tier 3 Institution' }
+      ),
+    ]);
     setAtsLoading(false);
-    
+
     if (result && typeof result !== 'string') {
       setAtsResult(result as ATSResult);
+    }
+
+    if (
+      result &&
+      tierOneResult &&
+      tierThreeResult &&
+      typeof result !== 'string' &&
+      typeof tierOneResult !== 'string' &&
+      typeof tierThreeResult !== 'string'
+    ) {
+      const warnings: string[] = [];
+      const highTierScore = (tierOneResult as ATSResult).score;
+      const lowTierScore = (tierThreeResult as ATSResult).score;
+      const delta = Math.abs(highTierScore - lowTierScore);
+
+      if (delta >= 5) {
+        warnings.push(
+          `Detected a ${delta}% swing between Tier 1 and Tier 3 institution placeholders. Review for bias before relying on ATS results.`
+        );
+      }
+
+      setBiasWarnings(warnings);
     }
   };
 
   const saveProfile = async () => {
     if (!user) return;
+    if (!humanReviewed) {
+      toast({
+        title: "Review required",
+        description: "Please confirm you have reviewed AI suggestions before saving.",
+        variant: "destructive",
+      });
+      return;
+    }
     setSaving(true);
 
     try {
@@ -185,10 +243,10 @@ ${edu.field_of_study || ''}
         title: "CV saved!",
         description: "Your changes have been saved successfully.",
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error saving",
-        description: error.message,
+        description: error instanceof Error ? error.message : "Unable to save CV",
         variant: "destructive",
       });
     } finally {
@@ -215,17 +273,19 @@ ${edu.field_of_study || ''}
       if (error) throw error;
       if (data) {
         setExperiences(prev => [data, ...prev]);
+        markNeedsReview();
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error adding experience",
-        description: error.message,
+        description: error instanceof Error ? error.message : "Unable to add experience",
         variant: "destructive",
       });
     }
   };
 
   const updateExperience = async (id: string, updates: Partial<WorkExperience>) => {
+    markNeedsReview();
     try {
       const { error } = await supabase
         .from('work_experience')
@@ -236,10 +296,10 @@ ${edu.field_of_study || ''}
       setExperiences(prev => prev.map(exp => 
         exp.id === id ? { ...exp, ...updates } : exp
       ));
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error updating",
-        description: error.message,
+        description: error instanceof Error ? error.message : "Unable to update experience",
         variant: "destructive",
       });
     }
@@ -254,10 +314,11 @@ ${edu.field_of_study || ''}
 
       if (error) throw error;
       setExperiences(prev => prev.filter(exp => exp.id !== id));
-    } catch (error: any) {
+      markNeedsReview();
+    } catch (error: unknown) {
       toast({
         title: "Error deleting",
-        description: error.message,
+        description: error instanceof Error ? error.message : "Unable to delete experience",
         variant: "destructive",
       });
     }
@@ -287,7 +348,17 @@ ${edu.field_of_study || ''}
               Build an ATS-optimized CV with AI-powered enhancements
             </p>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-3 flex-wrap items-center justify-end">
+            <div className="flex items-center gap-2 rounded-md border border-primary/30 bg-primary/5 px-3 py-2">
+              <Checkbox
+                id="humanReviewed"
+                checked={humanReviewed}
+                onCheckedChange={(checked) => setHumanReviewed(Boolean(checked))}
+              />
+              <Label htmlFor="humanReviewed" className="text-xs text-muted-foreground">
+                Human review completed
+              </Label>
+            </div>
             <Button onClick={handleATSAnalysis} disabled={atsLoading} variant="outline" className="btn-ghost-neon">
               {atsLoading ? (
                 <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -296,7 +367,12 @@ ${edu.field_of_study || ''}
               )}
               ATS Score
             </Button>
-            <Button onClick={saveProfile} disabled={saving} className="btn-neon">
+            <Button
+              onClick={saveProfile}
+              disabled={saving || !humanReviewed}
+              className="btn-neon"
+              title={!humanReviewed ? 'Tick the review box after checking AI suggestions' : undefined}
+            >
               {saving ? (
                 <Loader2 className="h-4 w-4 mr-2 animate-spin" />
               ) : (
@@ -317,7 +393,10 @@ ${edu.field_of_study || ''}
                 id="targetRole"
                 placeholder="e.g., Software Developer, Marketing Intern, Data Analyst"
                 value={targetRole}
-                onChange={(e) => setTargetRole(e.target.value)}
+                onChange={(e) => {
+                  setTargetRole(e.target.value);
+                  markNeedsReview();
+                }}
                 className="bg-input border-border mt-1"
               />
             </div>
@@ -384,6 +463,20 @@ ${edu.field_of_study || ''}
                 </div>
               </div>
             )}
+
+            {biasWarnings.length > 0 && (
+              <div className="rounded-md border border-warning/40 bg-warning/10 p-3 flex gap-3 mt-2">
+                <AlertCircle className="h-5 w-5 text-warning shrink-0" />
+                <div>
+                  <p className="text-sm font-semibold text-warning">Fairness check</p>
+                  <ul className="text-sm text-muted-foreground list-disc list-inside space-y-1">
+                    {biasWarnings.map((warning, index) => (
+                      <li key={index}>{warning}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )}
           </div>
         )}
 
@@ -428,7 +521,10 @@ ${edu.field_of_study || ''}
               <Input
                 placeholder="e.g., Final-year Computer Science Student | Passionate Full-Stack Developer"
                 value={headline}
-                onChange={(e) => setHeadline(e.target.value)}
+                onChange={(e) => {
+                  setHeadline(e.target.value);
+                  markNeedsReview();
+                }}
                 className="bg-input border-border text-lg"
               />
               <p className="text-xs text-muted-foreground">
@@ -458,7 +554,10 @@ ${edu.field_of_study || ''}
               <Textarea
                 placeholder="Write a compelling summary of your background, skills, and career goals..."
                 value={bio}
-                onChange={(e) => setBio(e.target.value)}
+                onChange={(e) => {
+                  setBio(e.target.value);
+                  markNeedsReview();
+                }}
                 className="bg-input border-border min-h-[150px]"
               />
               <p className="text-xs text-muted-foreground">

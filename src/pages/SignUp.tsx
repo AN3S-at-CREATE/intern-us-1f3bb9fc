@@ -75,9 +75,10 @@ const SignUp = () => {
         university: "/university/dashboard",
       };
       navigate(dashboardRoutes[role]);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Signup error:", error);
-      toast.error(error.message || "Failed to create account");
+      const message = error instanceof Error ? error.message : "Failed to create account";
+      toast.error(message);
     } finally {
       setIsLoading(false);
     }
