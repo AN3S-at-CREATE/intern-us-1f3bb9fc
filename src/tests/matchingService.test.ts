@@ -32,6 +32,7 @@ describe('matchingService', () => {
       employer_id: 'emp',
       title: 'Intern',
       company_name: 'Acme',
+      company_logo_url: null,
       industry: 'Tech',
       description: 'Role',
       requirements: null,

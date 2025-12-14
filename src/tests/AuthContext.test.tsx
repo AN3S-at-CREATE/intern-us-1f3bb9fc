@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
-import { vi, describe, it, expect, beforeEach } from 'vitest';
+import { vi, describe, it, expect, beforeEach, Mock } from 'vitest';
 
 // Mock Supabase client
 const mockSupabase = {
@@ -32,8 +32,8 @@ vi.mock('@/integrations/supabase/client', () => ({
 import { supabase } from '@/integrations/supabase/client';
 // Cast to a loosely typed mock object for easy mocking access
 const mockSupabaseClient = supabase as unknown as {
-  auth: { getSession: vi.Mock; onAuthStateChange: vi.Mock };
-  from: vi.Mock;
+  auth: { getSession: Mock; onAuthStateChange: Mock };
+  from: Mock;
 };
 
 const TestComponent = () => {
@@ -90,7 +90,7 @@ describe('AuthContext', () => {
     expect(screen.getByTestId('loading')).toHaveTextContent('Loading: true');
 
     // Now resolve profile
-    resolveProfile({ data: { id: 'p1', role: 'student' }, error: null });
+    resolveProfile!({ data: { id: 'p1', role: 'student' }, error: null });
 
     // Now loading should become false
     await waitFor(() => expect(screen.getByTestId('loading')).toHaveTextContent('Loading: false'));

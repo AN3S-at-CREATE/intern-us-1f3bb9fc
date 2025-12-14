@@ -2,7 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { ProtectedRoute } from '../components/auth/ProtectedRoute';
 import { AuthProvider } from '../contexts/AuthContext';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
-import { vi, describe, it, expect, beforeEach } from 'vitest';
+import { vi, describe, it, expect, beforeEach, Mock } from 'vitest';
 
 // Mock Supabase client
 const mockSupabase = {
@@ -34,7 +34,8 @@ vi.mock('@/integrations/supabase/client', () => ({
 import { supabase } from '@/integrations/supabase/client';
 // Cast to a loosely typed mock object for easy mocking access
 const mockSupabaseClient = supabase as unknown as {
-  auth: { getSession: vi.Mock; onAuthStateChange: vi.Mock };
+  auth: { getSession: Mock; onAuthStateChange: Mock };
+  from: Mock;
 };
 
 describe('ProtectedRoute', () => {

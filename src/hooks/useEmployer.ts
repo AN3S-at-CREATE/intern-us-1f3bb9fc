@@ -162,12 +162,26 @@ export function useEmployer() {
       return;
     }
 
-    const enriched = (data || []).map(item => ({
-      ...item,
-      ai_generated: item.ai_generated ?? false,
-      ai_review_status: item.ai_review_status ?? 'approved',
-      policy_flags: item.policy_flags ?? [],
-      ee_status: item.ee_status ?? 'pass',
+    // Cast to include optional AI review metadata (not in DB schema yet)
+    const enriched: Opportunity[] = (data || []).map(item => ({
+      id: item.id,
+      title: item.title,
+      company_name: item.company_name,
+      description: item.description,
+      location: item.location,
+      location_type: item.location_type,
+      opportunity_type: item.opportunity_type,
+      industry: item.industry,
+      is_active: item.is_active,
+      is_featured: item.is_featured,
+      views_count: item.views_count,
+      applications_count: item.applications_count,
+      created_at: item.created_at,
+      application_deadline: item.application_deadline,
+      ai_generated: false,
+      ai_review_status: 'approved' as const,
+      policy_flags: [],
+      ee_status: 'pass' as const,
     }));
 
     setOpportunities(enriched);
