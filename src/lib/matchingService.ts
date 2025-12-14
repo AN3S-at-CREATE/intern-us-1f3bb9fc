@@ -7,7 +7,7 @@ type StudentProfile = Partial<Database['public']['Tables']['student_profiles']['
   language?: string | string[];
 };
 
-type Opportunity = Database['public']['Tables']['opportunities']['Row'];
+type Opportunity = Partial<Database['public']['Tables']['opportunities']['Row']>;
 
 export interface NormalizedDemographics {
   province: string | null;

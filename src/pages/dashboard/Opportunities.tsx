@@ -73,7 +73,7 @@ export default function Opportunities() {
 
   type OpportunityRow = Database['public']['Tables']['opportunities']['Row'];
 
-  const getMatchScore = async (opportunityId: string, opportunity: OpportunityRow) => {
+  const getMatchScore = async (opportunityId: string, opportunity: Partial<OpportunityRow>) => {
     if (matchScores[opportunityId] || loadingScores.has(opportunityId)) return;
     
     setLoadingScores(prev => new Set(prev).add(opportunityId));
