@@ -26,10 +26,42 @@ import {
 } from 'lucide-react';
 
 const categoryColors: Record<string, string> = {
+  // Module categories (existing)
   'Soft Skills': 'bg-accent-magenta/20 text-accent-magenta border-accent-magenta/30',
   'Technical': 'bg-primary/20 text-primary border-primary/30',
   'Career': 'bg-accent-violet/20 text-accent-violet border-accent-violet/30',
   'Life Skills': 'bg-accent-purple/20 text-accent-purple border-accent-purple/30',
+  
+  // Skill categories (new)
+  'Programming & Development': 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+  'Data & Analytics': 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+  'Digital Marketing & Social Media': 'bg-pink-500/20 text-pink-400 border-pink-500/30',
+  'Design & Creative': 'bg-purple-500/20 text-purple-400 border-purple-500/30',
+  'Business & Management': 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+  'Finance & Accounting': 'bg-green-500/20 text-green-400 border-green-500/30',
+  'Healthcare & Medical': 'bg-red-500/20 text-red-400 border-red-500/30',
+  'Engineering & Technical': 'bg-slate-500/20 text-slate-400 border-slate-500/30',
+  'Languages': 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30',
+  'Sales & Customer Service': 'bg-orange-500/20 text-orange-400 border-orange-500/30',
+  'Education & Training': 'bg-teal-500/20 text-teal-400 border-teal-500/30',
+  'Legal & Compliance': 'bg-gray-500/20 text-gray-400 border-gray-500/30',
+  'Hospitality & Tourism': 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30',
+  'Agriculture & Environment': 'bg-lime-500/20 text-lime-400 border-lime-500/30',
+  'Emerging Technologies': 'bg-violet-500/20 text-violet-400 border-violet-500/30',
+  'Manufacturing & Production': 'bg-stone-500/20 text-stone-400 border-stone-500/30',
+  'Human Resources': 'bg-rose-500/20 text-rose-400 border-rose-500/30',
+  'Media & Communications': 'bg-sky-500/20 text-sky-400 border-sky-500/30',
+  
+  // Legacy categories (for backward compatibility)
+  'Software': 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+  'Programming': 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+  'Analytics': 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+  'Management': 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+  'Service': 'bg-orange-500/20 text-orange-400 border-orange-500/30',
+  'Business': 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+  'Finance': 'bg-green-500/20 text-green-400 border-green-500/30',
+  'Creative': 'bg-purple-500/20 text-purple-400 border-purple-500/30',
+  'Marketing': 'bg-pink-500/20 text-pink-400 border-pink-500/30',
 };
 
 const difficultyColors: Record<string, string> = {
