@@ -238,6 +238,7 @@ export function useEmployer() {
     const { data, error } = await supabase
       .from('opportunities')
       .insert({
+        ...reviewMeta,
         employer_id: user.id,
         company_name: employerProfile?.company_name || 'Company',
         company_logo_url: employerProfile?.company_logo_url,
